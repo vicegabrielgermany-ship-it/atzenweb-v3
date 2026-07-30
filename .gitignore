@@ -1,0 +1,17 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# Local design assets and inspiration
+# image-references/
+
+# Temporary and agent directories
+.bg-shell/
+.agent/
+.impeccable/
+.vercel

@@ -1,0 +1,475 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Courier New", Courier, sans-serif;
+  --font-display: "Courier New", Courier, sans-serif;
+  --font-mono: "Courier New", Courier, monospace;
+  --font-handwritten: "Nerko One", cursive;
+
+  /* ── Official Brand Colors (from product owner) ── */
+  /* brand-forest: #058054  |  brand-cream: #edcea7  |  brand-gold: #d38b0d */
+  /* ── WCAG AAA color system (design.md has full ratio table) ── */
+
+  --color-brand-forest: oklch(0.42 0.13 165.0);
+  --color-brand-cream:  oklch(0.85 0.04 75.0);
+  --color-brand-gold:   oklch(0.65 0.15 75.0);
+
+  /* Light Mode Canvas — EIN einziges Markenbeige (#edcea7), keine Abstufungen */
+  --color-canvas: oklch(0.85 0.04 75.0);
+  --color-canvas-soft: oklch(0.85 0.04 75.0);
+
+  /* Light Mode Text — EIN einziges Markengrün (#058054), keine Abstufungen */
+  --color-ink: oklch(0.42 0.13 165.0);
+  --color-ink-secondary: oklch(0.42 0.13 165.0);
+  --color-ink-mute: oklch(0.42 0.13 165.0);
+
+  /* Primary Brand (forest green) — identisch zu ink, EIN Grün für die ganze Seite */
+  --color-primary: oklch(0.42 0.13 165.0);
+  --color-primary-deep: oklch(0.42 0.13 165.0);
+  --color-primary-press: oklch(0.42 0.13 165.0);
+  --color-primary-soft: oklch(0.42 0.13 165.0 / 0.15);
+  --color-fresh: oklch(0.42 0.13 165.0);
+
+  /* Gold Accent (decorative — NOT for body text) */
+  --color-accent: oklch(0.68 0.12 82.0);
+  --color-accent-hover: oklch(0.60 0.11 82.0);
+  --color-accent-soft: oklch(0.68 0.12 82.0 / 0.15);
+  --color-accent-text: oklch(0.42 0.13 165.0);
+  --color-on-accent: oklch(0.42 0.13 165.0);
+
+  /* Dark Mode */
+  --color-on-primary: oklch(0.85 0.04 75.0);
+  --color-brand-dark-900: oklch(0.42 0.13 165.0);
+
+  /* Utilities */
+  --color-hairline: oklch(0.42 0.13 165.0 / 0.08);
+  --color-hairline-input: oklch(0.42 0.13 165.0 / 0.25);
+  --color-shadow-primary: oklch(0.42 0.13 165.0 / 0.15);
+
+}
+
+/* Faded frayed edge wheatpaste glued torn edge dot matrix poster */
+.wheatpaste-poster {
+  position: relative;
+  /* Organic ripped-paper edges using a detailed organic polygon clip-path */
+  clip-path: polygon(
+    /* Top Edge - organic torn shape */
+    0% 2.5%, 6% 1.2%, 12% 4.8%, 18% 1.5%, 25% 3.8%, 32% 0.8%, 40% 5.2%, 48% 1.5%, 55% 4.2%, 62% 0.5%, 70% 4.9%, 78% 1.2%, 85% 3.8%, 92% 0.8%, 100% 3.5%,
+    /* Right Edge - frayed but mostly vertical */
+    98.8% 12%, 100% 25%, 98.5% 38%, 99.6% 50%, 98.2% 63%, 99.8% 76%, 98.5% 88%, 99.5% 100%,
+    /* Bottom Edge - organic deep tears */
+    93% 97.5%, 86% 99.2%, 78% 95.8%, 71% 98.5%, 64% 96.2%, 56% 99.5%, 48% 95.0%, 41% 98.2%, 34% 96.8%, 26% 99.0%, 18% 95.5%, 11% 98.8%, 0% 96.5%,
+    /* Left Edge - frayed */
+    1.2% 88%, 0.2% 75%, 1.5% 62%, 0.4% 50%, 1.8% 37%, 0.8% 25%, 1.5% 12%
+  );
+  /* Organic weathered pulpy paper background texture — Markenbeige, kein eigenes Off-Weiß */
+  background-color: var(--color-canvas);
+  /* Use drop-shadow filter so the shadow follows the jagged torn edge shape! */
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.06)) drop-shadow(0 10px 20px rgba(0,0,0,0.1)) contrast(0.92) brightness(0.96) saturate(0.88);
+  transition: filter 0.3s ease;
+}
+
+.wheatpaste-poster:hover {
+  /* Interactive response: feels slightly responsive to hover */
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.08)) drop-shadow(0 14px 28px rgba(0,0,0,0.12)) contrast(0.95) brightness(0.98) saturate(0.92);
+}
+
+
+
+
+@layer base {
+  body {
+    @apply bg-canvas text-ink overflow-x-clip antialiased selection:bg-accent selection:text-ink font-sans;
+  }
+
+  /* Enforce minimum size & weight on all Courier body text */
+  .font-mono {
+    font-size: max(1rem, 16px);
+    font-weight: 600;
+  }
+  
+  html.dark body {
+    @apply bg-primary-deep text-canvas;
+  }
+
+  /* Browser-Autofill (Chrome/Safari) überschreibt Inputs sonst mit eigenem Hellblau — auf Markenbeige/-grün fixen */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--color-canvas) inset;
+    box-shadow: 0 0 0 1000px var(--color-canvas) inset;
+    -webkit-text-fill-color: var(--color-ink);
+    caret-color: var(--color-ink);
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Courier New", Courier, sans-serif;
+    letter-spacing: normal;
+    font-weight: normal;
+    text-transform: none;
+  }
+
+  /* Blackletter/Fraktur fonts must never under any circumstances be uppercase */
+  h1, h2, h3, h4, h5, h6,
+  .font-display,
+  .font-unifraktur,
+  .text-display-xxl,
+  .text-display-xl,
+  .text-display-lg,
+  .text-display-md,
+  .text-heading-lg {
+    text-transform: none !important;
+  }
+
+  /* Core Design.md Typography system classes */
+  .text-display-xxl {
+    font-family: "Courier New", Courier, sans-serif;
+    font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem);
+    line-height: 1.0;
+    letter-spacing: normal;
+    font-weight: 400;
+    text-shadow: 1px 1px 0px oklch(0.42 0.13 165.0 / 0.3);
+  }
+  html.dark .text-display-xxl {
+    text-shadow: 1px 1px 0px oklch(0.85 0.04 75.0 / 0.2);
+  }
+  
+  .text-display-xl {
+    font-family: "Courier New", Courier, sans-serif;
+    font-size: clamp(2rem, 4vw + 0.8rem, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: normal;
+    font-weight: 400;
+  }
+  .text-display-lg {
+    font-family: "Courier New", Courier, sans-serif;
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: normal;
+    font-weight: 400;
+  }
+  .text-display-md {
+    font-family: "Courier New", Courier, sans-serif;
+    font-size: clamp(1.5rem, 2vw + 0.5rem, 2rem);
+    line-height: 1.12;
+    letter-spacing: normal;
+    font-weight: 400;
+  }
+  .text-heading-lg {
+    font-family: "Courier New", Courier, sans-serif;
+    font-size: 2rem;
+    line-height: 1.1;
+    letter-spacing: normal;
+    font-weight: 400;
+  }
+  .text-heading-md {
+    font-family: "Courier New", Courier, sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.3;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    text-transform: none;
+  }
+  .text-heading-sm {
+    font-family: "Courier New", Courier, sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: none;
+  }
+  .text-body-lg {
+    font-family: "Courier New", Courier, sans-serif;
+    font-size: max(1.25rem, 16px);
+    line-height: 1.5;
+    font-weight: 600;
+  }
+  .text-body-md {
+    font-family: "Courier New", Courier, sans-serif;
+    font-size: max(1rem, 16px);
+    line-height: 1.5;
+    font-weight: 600;
+  }
+  .text-body-tabular {
+    font-family: "Courier New", Courier, monospace;
+    font-size: max(1rem, 16px);
+    line-height: 1.4;
+    font-feature-settings: "tnum";
+    font-weight: 600;
+  }
+  .text-caption {
+    font-family: "Courier New", Courier, monospace;
+    font-size: max(0.875rem, 16px);
+    line-height: 1.4;
+    font-weight: 600;
+  }
+}
+
+/* Custom Scrollbars */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-ink-mute);
+  border-radius: 999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink);
+}
+
+html.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-primary-soft);
+}
+html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+/* ==========================================
+   PRINT-CULTURE ANIMATIONS
+   ========================================== */
+
+@keyframes flutter {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(-1deg) scale(1.01);
+  }
+  75% {
+    transform: rotate(1.5deg) scale(0.99);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes ink-reveal {
+  0% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0);
+  }
+}
+
+@keyframes misregistration {
+  0% { text-shadow: 0 0 0 transparent; }
+  20% { text-shadow: -1px 0 0 rgba(0,255,255,0.5), 1px 0 0 rgba(255,0,255,0.5); }
+  40% { text-shadow: 1px 0 0 rgba(0,255,255,0.5), -1px 0 0 rgba(255,0,255,0.5); }
+  60% { text-shadow: -1px 0 0 rgba(0,255,255,0.5), 1px 0 0 rgba(255,0,255,0.5); }
+  100% { text-shadow: 0 0 0 transparent; }
+}
+
+@keyframes gradient-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-flutter {
+  animation: flutter 0.4s ease-in-out;
+}
+
+.animate-ink-reveal {
+  animation: ink-reveal 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.animate-misregistration:hover {
+  animation: misregistration 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Sunburst background from the physical label */
+.bg-sunburst {
+  background: repeating-conic-gradient(
+    from 0deg,
+    var(--color-primary-deep) 0deg 10deg,
+    var(--color-primary) 10deg 20deg
+  );
+}
+
+.bg-sunburst-animated {
+  background: repeating-conic-gradient(
+    from 0deg,
+    var(--color-primary-deep) 0deg 10deg,
+    var(--color-primary) 10deg 20deg
+  );
+  animation: gradient-rotate 60s linear infinite;
+}
+
+html.light .bg-sunburst {
+  background: repeating-conic-gradient(
+    from 0deg,
+    oklch(0.75 0.15 85.0 / 0.20) 0deg 10deg,
+    oklch(0.80 0.16 85.0 / 0.06) 10deg 20deg
+  );
+}
+
+html.light .bg-sunburst-animated {
+  background: repeating-conic-gradient(
+    from 0deg,
+    oklch(0.75 0.15 85.0 / 0.20) 0deg 10deg,
+    oklch(0.80 0.16 85.0 / 0.06) 10deg 20deg
+  );
+  animation: gradient-rotate 60s linear infinite;
+}
+
+/* Hide scrollbars for sidebar */
+.sidebar-scrollbar-hidden {
+  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+.sidebar-scrollbar-hidden::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+/* Utility to add halftone dot pattern overlay to images */
+.halftone-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(var(--color-ink) 1px, transparent 1px);
+  background-size: 4px 4px;
+  opacity: 0.15;
+  mix-blend-mode: multiply;
+}
+
+html.dark .halftone-overlay::after {
+  background-image: radial-gradient(var(--color-canvas) 1px, transparent 1px);
+  opacity: 0.1;
+  mix-blend-mode: screen;
+}
+
+/* Custom positioning for the hero sunburst to center exactly on the logo */
+.hero-sunburst {
+  left: 50%;
+  top: 72%;
+}
+
+@media (min-width: 1024px) {
+  .hero-sunburst {
+    left: 72%;
+    top: 50%;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-sunburst {
+    left: calc(50% + 320px);
+    top: 50%;
+  }
+}
+
+/* ── Year Badge for Timeline ── */
+.year-sticker {
+  background: var(--color-ink);
+  color: var(--color-canvas);
+  border-radius: 0.5em;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Hide scrollbars for sidebar */
+.sidebar-scrollbar-hidden {
+  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+.sidebar-scrollbar-hidden::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+/* ── Timeline Carousel — Horizontal Scroll ── */
+.timeline-carousel-outer {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.timeline-carousel-track {
+  display: flex;
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.timeline-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.timeline-carousel-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  min-height: auto;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Timeline Carousel — Left/Right Nav Buttons ── */
+.timeline-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  padding: 0.5rem;
+  color: rgba(255,255,255,0.8);
+  transition: color 0.2s;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.timeline-nav-btn:hover {
+  color: white;
+}
+
+/* ── Retro Content Width (1100px fixed) ── */
+.content-width {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}

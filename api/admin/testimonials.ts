@@ -1,0 +1,40 @@
+import { createHandler, requireAuth, getCollection, getItem, saveItem, deleteItem, generateId } from '../_lib/kv.js';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+
+const COLLECTION = 'testimonials';
+
+export default createHandler({
+  async GET(req, res) {
+    if (!requireAuth(req, res)) return;
+    const items = await getCollection<any>(COLLECTION);
+    res.json(items);
+  },
+
+  async POST(req, res) {
+    if (!requireAuth(req, res)) return;
+    const body = req.body;
+    const id = generateId();
+    const item = { ...body, id };
+    await saveItem(COLLECTION, id, item);
+    res.status(201).json(item);
+  },
+
+  async PUT(req, res) {
+    if (!requireAuth(req, res)) return;
+    const { id } = req.query;
+    if (!id || typeof id !== 'string') { res.status(400).json({ error: 'id required' }); return; }
+    const existing = await getItem<any>(COLLECTION, id);
+    if (!existing) { res.status(404).json({ error: 'Not found' }); return; }
+    const updated = { ...existing, ...req.body, id };
+    await saveItem(COLLECTION, id, updated);
+    res.json(updated);
+  },
+
+  async DELETE(req, res) {
+    if (!requireAuth(req, res)) return;
+    const { id } = req.query;
+    if (!id || typeof id !== 'string') { res.status(400).json({ error: 'id required' }); return; }
+    await deleteItem(COLLECTION, id);
+    res.json({ success: true });
+  }
+});

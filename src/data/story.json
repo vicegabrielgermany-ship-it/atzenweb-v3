@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "year": "2020",
+    "title": "Vom VICE-Büro nach Franken",
+    "titleEn": "From VICE Office to Franconia",
+    "text": "Nachdem er jahrelang für das VICE Magazin in Berlin arbeitete, verschlug es Gabriel, den Gründer von Atzengold 2012 in die Metropolregion. Dort traf er Harry, der die HeyHey Bar in der Klaragasse betrieb und der aus Atzenhof stammt. Atzen sind in der Hauptstadt die Freunde, mit denen Du das Brot brichst. Oder halt flüssiges Brot.",
+    "textEn": "After years working for VICE Magazine in Berlin, Gabriel, the founder of Atzengold, found his way to the metro region in 2012. There he met Harry, who ran the HeyHey Bar on Klaragasse and hails from Atzenhof. In the capital, 'Atzen' are the friends you break bread with. Or, well, liquid bread.",
+    "tagline": "VICE BERLIN TRIFFT ATZENHOF",
+    "taglineEn": "VICE BERLIN MEETS ATZENHOF",
+    "image": "Map"
+  },
+  {
+    "id": 3,
+    "year": "2021",
+    "title": "Rezept perfektioniert",
+    "titleEn": "Perfecting the Recipe",
+    "text": "Gabriel perfektioniert sein Rezept mit Unterstützung lokaler Brauereien in Fürth. Monatelang tüftelt er an der perfekten Komposition für ein ehrliches, naturtrübes Kellerbier – gebraut für die besten Kumpels.",
+    "textEn": "Gabriel perfects his recipe with support from local breweries in Fürth. He spends months refining the perfect composition for an authentic, unfiltered Kellerbier—crafted to be shared with brothers.",
+    "tagline": "FÜRTHER GASTRO-POWER",
+    "taglineEn": "LOCAL HOSPITALITY",
+    "image": "Users"
+  },
+  {
+    "id": 4,
+    "year": "2022",
+    "title": "Das Lohnbrau-Prinzip",
+    "titleEn": "The Cuckoo Brewery Model",
+    "text": "Statt Millionen in eigene Tanks zu stecken, lebt Gabriel das Lohnbrauer-Prinzip. Er mietet freie Sude in traditionsreichen fränkischen Brauereien (z.B. in Buttenheim). Das schont Ressourcen, sichert überlegene Qualität und ehrt die alten Meister.",
+    "textEn": "Instead of borrowing millions for his own factory, Gabriel goes 'Cuckoo'. He rents idle tank capacities from iconic, generation-old Franconian family breweries. This recycling workflow honors master brewers while keeping the product fully independent.",
+    "tagline": "TRANSPARENT & NACHHALTIG",
+    "taglineEn": "CONSCIOUS COOPERATION",
+    "image": "Infinity"
+  },
+  {
+    "id": 6,
+    "year": "2023",
+    "title": "Die Geburtsstunde",
+    "titleEn": "The Birth of an Idea",
+    "text": "Die Idee ward geboren und so entstand ein süffiges unfiltriertes Helles um dass sich immer mehr Atzen (das beinhaltet natürlich auch ausdrücklich Atz:innen, auch wenn das Wort geschlechtslos ist) scharen.",
+    "textEn": "The idea was born, giving rise to a süffig, unfiltered Helles around which more and more Atzen gather (this of course explicitly includes Atz:innen too, even though the word itself is gender-neutral).",
+    "tagline": "VON DER IDEE ZUM BIER",
+    "taglineEn": "FROM IDEA TO BEER",
+    "image": "Sparkles",
+    "gifUrl": "/images/richtig.gif"
+  },
+  {
+    "id": 5,
+    "year": "Heute",
+    "title": "Hype in Franken statt Berlin",
+    "titleEn": "Franconian Hype Override",
+    "text": "Eigentlich war der Plan, das Bier in Berlin-Spätis großzuziehen. Doch das unfiltrierte Atzengold ist so süffig, dass die Franken selbst den Großteil austrinken! Wir erweitern ständig unsere Kapzitäten, um bald auch ganz Berlin glücklich zu machen.",
+    "textEn": "The original business plan was to export the entire volume to late-night Berlin Spätis. However, the locals went wild for the recipe, making Nürnberg/Fürth/Erlangen top drinkers! We are expanding tank spaces to satisfy Berlin soon.",
+    "tagline": "FRANCONIAN THIRST",
+    "taglineEn": "CULT STATUS REACHED",
+    "image": "Award"
+  }
+]
