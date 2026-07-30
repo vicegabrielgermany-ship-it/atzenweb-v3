@@ -190,30 +190,30 @@ export default function CookieBanner({ lang, onConsentSaved, onTriggerNotificati
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
-        className="bg-canvas dark:bg-brand-dark-900 text-ink dark:text-canvas max-w-2xl w-full border border-ink/10 dark:border-canvas/10 rounded-3xl shadow-2xl overflow-hidden text-left flex flex-col font-sans"
+        className="bg-canvas dark:bg-brand-dark-900 text-ink dark:text-canvas max-w-2xl w-full max-h-[85vh] border border-ink/10 dark:border-canvas/10 rounded-3xl shadow-2xl overflow-y-auto text-left flex flex-col font-sans"
       >
         {/* Banner Content Main Block */}
-        <div className="p-6 md:p-8 space-y-6">
+        <div className="p-4 sm:p-6 md:p-8 space-y-3 sm:space-y-6">
 
           {/* Header & Logo styling matching screenshot but fully brand aligned */}
-          <div className="flex justify-between items-start border-b border-ink/10 dark:border-canvas/10 pb-4">
+          <div className="flex justify-between items-start border-b border-ink/10 dark:border-canvas/10 pb-3 sm:pb-4">
             <div>
-              <h1 className="text-2xl sm:text-3.5xl font-black uppercase tracking-tight text-ink dark:text-canvas font-heading">
+              <h1 className="text-xl sm:text-3.5xl font-black uppercase tracking-tight text-ink dark:text-canvas font-heading">
                 {activeT.brand}
               </h1>
-              <h2 className="text-base sm:text-lg font-bold text-ink-secondary dark:text-canvas/80 tracking-tight mt-1 uppercase">
+              <h2 className="text-sm sm:text-lg font-bold text-ink-secondary dark:text-canvas/80 tracking-tight mt-1 uppercase">
                 {activeT.title}
               </h2>
             </div>
-            <div className="p-3 bg-ink/5 dark:bg-canvas/5 rounded-full shadow-inner">
-              <ShieldCheck className="h-6 w-6 text-ink dark:text-canvas" />
+            <div className="p-2 sm:p-3 bg-ink/5 dark:bg-canvas/5 rounded-full shadow-inner shrink-0">
+              <ShieldCheck className="h-5 w-5 sm:h-6 sm:w-6 text-ink dark:text-canvas" />
             </div>
           </div>
 
           {!isDetailsOpen ? (
             <>
               {/* Core informational text */}
-              <p className="text-ink-secondary dark:text-canvas/70 text-xs sm:text-sm leading-relaxed font-medium">
+              <p className="text-ink-secondary dark:text-canvas/70 text-xs sm:text-sm leading-relaxed font-medium line-clamp-4 sm:line-clamp-none">
                 {activeT.desc}
               </p>
 
@@ -250,11 +250,11 @@ export default function CookieBanner({ lang, onConsentSaved, onTriggerNotificati
               </div>
 
               {/* Switch toggles styled like screenshot but brand integrated */}
-              <div className="border-t border-b border-ink/10 dark:border-canvas/10 py-4 my-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="border-t border-b border-ink/10 dark:border-canvas/10 py-2.5 sm:py-4 my-1 sm:my-2 grid grid-cols-3 sm:flex sm:flex-row items-center justify-between gap-2 sm:gap-4">
 
                 {/* 1. Marketing Toggle */}
-                <div className="flex items-center justify-between w-full sm:w-auto gap-4">
-                  <span className="text-sm font-bold text-ink dark:text-canvas uppercase tracking-wide">{activeT.marketing}</span>
+                <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between w-full sm:w-auto gap-1.5 sm:gap-4">
+                  <span className="text-[10px] sm:text-sm font-bold text-ink dark:text-canvas uppercase tracking-wide text-center">{activeT.marketing}</span>
                   <button
                     role="switch"
                     aria-checked={marketing}
@@ -274,8 +274,8 @@ export default function CookieBanner({ lang, onConsentSaved, onTriggerNotificati
                 </div>
 
                 {/* 2. Functional Toggle */}
-                <div className="flex items-center justify-between w-full sm:w-auto gap-4">
-                  <span className="text-sm font-bold text-ink dark:text-canvas uppercase tracking-wide">{activeT.functional}</span>
+                <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between w-full sm:w-auto gap-1.5 sm:gap-4">
+                  <span className="text-[10px] sm:text-sm font-bold text-ink dark:text-canvas uppercase tracking-wide text-center">{activeT.functional}</span>
                   <button
                     role="switch"
                     aria-checked={functional}
@@ -295,8 +295,8 @@ export default function CookieBanner({ lang, onConsentSaved, onTriggerNotificati
                 </div>
 
                 {/* 3. Essential Toggle (Checked & Disabled/Locked) */}
-                <div className="flex items-center justify-between w-full sm:w-auto gap-4">
-                  <span className="text-sm font-bold text-ink-mute dark:text-canvas/40 uppercase tracking-wide">{activeT.essential}</span>
+                <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between w-full sm:w-auto gap-1.5 sm:gap-4">
+                  <span className="text-[10px] sm:text-sm font-bold text-ink-mute dark:text-canvas/40 uppercase tracking-wide text-center">{activeT.essential}</span>
                   <button
                     role="switch"
                     aria-checked={true}
@@ -332,28 +332,28 @@ export default function CookieBanner({ lang, onConsentSaved, onTriggerNotificati
           )}
 
           {/* Buttons matching colors perfectly */}
-          <div className="flex flex-wrap items-center justify-between md:justify-end gap-3 pt-4 border-t border-ink/10 dark:border-canvas/10 font-bold text-sm">
+          <div className="flex flex-wrap items-center justify-between md:justify-end gap-2 sm:gap-3 pt-3 sm:pt-4 border-t border-ink/10 dark:border-canvas/10 font-bold text-sm">
             <button
               onClick={() => setIsDetailsOpen(!isDetailsOpen)}
-              className="px-6 py-3 rounded-full cursor-pointer bg-transparent hover:bg-ink/5 dark:bg-canvas/10 dark:hover:bg-canvas/20 text-ink dark:text-canvas transition-all text-xs uppercase font-black whitespace-nowrap border border-ink/20 dark:border-canvas/20"
+              className="px-4 sm:px-6 py-2 sm:py-3 rounded-full cursor-pointer bg-transparent hover:bg-ink/5 dark:bg-canvas/10 dark:hover:bg-canvas/20 text-ink dark:text-canvas transition-all text-[11px] sm:text-xs uppercase font-black whitespace-nowrap border border-ink/20 dark:border-canvas/20"
             >
               {isDetailsOpen ? 'BACK' : activeT.more}
             </button>
             <button
               onClick={handleSave}
-              className="px-6 py-3 rounded-full cursor-pointer bg-ink hover:bg-ink/90 text-canvas dark:bg-canvas dark:hover:bg-canvas/90 dark:text-ink transition-all text-xs uppercase shadow-md hover:shadow-lg hover:-translate-y-0.5 font-black whitespace-nowrap"
+              className="px-4 sm:px-6 py-2 sm:py-3 rounded-full cursor-pointer bg-ink hover:bg-ink/90 text-canvas dark:bg-canvas dark:hover:bg-canvas/90 dark:text-ink transition-all text-[11px] sm:text-xs uppercase shadow-md hover:shadow-lg hover:-translate-y-0.5 font-black whitespace-nowrap"
             >
               {activeT.save}
             </button>
             <button
               onClick={handleDeclineAll}
-              className="px-6 py-3 rounded-full cursor-pointer bg-transparent border border-ink/20 text-ink-secondary hover:border-ink hover:text-ink dark:border-canvas/20 dark:text-canvas/80 dark:hover:border-canvas dark:hover:text-canvas transition-all text-xs uppercase font-black whitespace-nowrap"
+              className="px-4 sm:px-6 py-2 sm:py-3 rounded-full cursor-pointer bg-transparent border border-ink/20 text-ink-secondary hover:border-ink hover:text-ink dark:border-canvas/20 dark:text-canvas/80 dark:hover:border-canvas dark:hover:text-canvas transition-all text-[11px] sm:text-xs uppercase font-black whitespace-nowrap"
             >
               {activeT.decline}
             </button>
             <button
               onClick={handleAcceptAll}
-              className="px-6 py-3 rounded-full cursor-pointer bg-ink text-canvas hover:bg-ink/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 text-xs uppercase font-black whitespace-nowrap"
+              className="px-4 sm:px-6 py-2 sm:py-3 rounded-full cursor-pointer bg-ink text-canvas hover:bg-ink/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 text-[11px] sm:text-xs uppercase font-black whitespace-nowrap"
             >
               {activeT.acceptAll}
             </button>
@@ -362,7 +362,7 @@ export default function CookieBanner({ lang, onConsentSaved, onTriggerNotificati
         </div>
 
         {/* Footer brand disclaimer */}
-        <div className="bg-ink/5 dark:bg-canvas/5 p-3 text-center text-[10px] text-ink-mute dark:text-canvas/40 font-mono uppercase">
+        <div className="bg-ink/5 dark:bg-canvas/5 p-2 sm:p-3 text-center text-[10px] text-ink-mute dark:text-canvas/40 font-mono uppercase">
           {activeT.powered}
         </div>
       </motion.div>

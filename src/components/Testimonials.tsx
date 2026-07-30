@@ -148,7 +148,7 @@ export default function Testimonials({ lang = 'de' }: { lang?: string }) {
   const thirdColumn = testimonials.slice(6, 9);
 
   return (
-    <section className="content-width px-6 sm:px-12 bg-canvas dark:bg-primary-deep py-32 relative overflow-hidden" style={{ backgroundImage: 'url(/elemente/Backgroundelement_PLACEHOLDER.webp)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+    <section className="content-width px-6 sm:px-12 bg-canvas dark:bg-primary-deep py-12 md:py-32 relative overflow-hidden" style={{ backgroundImage: 'url(/elemente/Backgroundelement_PLACEHOLDER.webp)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <div className="relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -166,7 +166,7 @@ export default function Testimonials({ lang = 'de' }: { lang?: string }) {
         </motion.div>
 
         {/* Sliding Columns Grid - Tumbling Posters Effect */}
-        <div className="flex justify-center gap-8 mt-20 mask-[linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)] max-h-[800px] overflow-hidden perspective-1000">
+        <div className="flex justify-center gap-8 mt-8 md:mt-20 mask-[linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)] max-h-[800px] overflow-hidden perspective-1000">
           <TestimonialsColumn testimonials={firstColumn} duration={18} />
           <TestimonialsColumn testimonials={secondColumn} className="hidden md:block mt-12" duration={24} />
           <TestimonialsColumn testimonials={thirdColumn} className="hidden lg:block mt-4" duration={20} />
@@ -178,7 +178,7 @@ export default function Testimonials({ lang = 'de' }: { lang?: string }) {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           viewport={{ once: true }}
-          className="relative z-10 mt-16 max-w-3xl bg-canvas dark:bg-primary-deep border border-ink/10 dark:border-canvas/15 shadow-sm px-8 py-8 flex flex-col sm:flex-row items-center justify-start gap-8 sm:gap-12"
+          className="relative z-10 mt-8 md:mt-16 max-w-3xl bg-canvas dark:bg-primary-deep border border-ink/10 dark:border-canvas/15 shadow-sm px-8 py-8 flex flex-col sm:flex-row items-center justify-start gap-8 sm:gap-12"
         >
           <div className="flex flex-col items-center text-center">
             <span className="text-3xl font-display font-extrabold text-ink dark:text-canvas">

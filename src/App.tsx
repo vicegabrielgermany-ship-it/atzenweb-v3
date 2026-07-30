@@ -260,6 +260,15 @@ export default function App() {
   if (currentPage === 'shop') {
     return (
       <div className="min-h-screen font-sans light">
+        <div className="lg:hidden flex items-center justify-center pt-5 pb-3 bg-canvas relative z-20">
+          <a
+            href="#"
+            onClick={(e) => { e.preventDefault(); setCurrentPage('home'); window.location.hash = ''; }}
+            aria-label="Atzengold"
+          >
+            <img src="/elemente/Logo.gif" alt="Atzengold" className="h-9 w-auto object-contain" />
+          </a>
+        </div>
         <button
           onClick={() => setSidebarOpen(true)}
           aria-label="Menü öffnen"
@@ -299,6 +308,17 @@ export default function App() {
       >
         {lang === 'en' ? 'Skip to main content' : 'Zum Hauptinhalt springen'}
       </a>
+
+      {/* Mobile top bar with logo — visible only below lg */}
+      <div className="lg:hidden flex items-center justify-center pt-5 pb-3 bg-canvas relative z-20">
+        <a
+          href="#"
+          onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+          aria-label="Atzengold"
+        >
+          <img src="/elemente/Logo.gif" alt="Atzengold" className="h-9 w-auto object-contain" />
+        </a>
+      </div>
 
       {/* Mobile hamburger — visible only below lg */}
       <button

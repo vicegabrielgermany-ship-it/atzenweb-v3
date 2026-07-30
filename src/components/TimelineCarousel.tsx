@@ -263,7 +263,7 @@ export default function TimelineCarousel({ lang }: TimelineCarouselProps) {
       {/* Horizontal scroll track */}
       <div ref={trackRef} className="timeline-carousel-track">
         {SLIDES.map((slide, idx) => (
-          <div key={slide.year} className="timeline-carousel-slide pr-6 md:pr-12 lg:pr-20 pl-4 md:pl-8 lg:pl-2 py-20 md:py-0">
+          <div key={slide.year} className="timeline-carousel-slide pr-6 md:pr-12 lg:pr-20 pl-4 md:pl-8 lg:pl-2 py-8 md:py-0">
             <div className="w-full content-width ml-0 mr-auto grid grid-cols-1 lg:grid-cols-[minmax(280px,35%)_1fr] gap-4 lg:gap-6 items-center">
               {/* Left: Storytime graphic (slide 1) + Polaroid Photo Card */}
               <div className="flex flex-col items-center lg:items-start lg:sticky lg:top-20 lg:self-start gap-4">

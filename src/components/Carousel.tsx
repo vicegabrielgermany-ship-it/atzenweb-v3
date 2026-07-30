@@ -3,10 +3,8 @@ import ChevronLeft from 'lucide-react/dist/esm/icons/chevron-left';
 import ChevronRight from 'lucide-react/dist/esm/icons/chevron-right';
 
 const slides = [
-  { src: '/elemente/1.png', alt: 'Carousel slide 1' },
   { src: '/elemente/2.png', alt: 'Carousel slide 2' },
   { src: '/elemente/3.png', alt: 'Carousel slide 3' },
-  { src: '/elemente/4.png', alt: 'Carousel slide 4' },
 ];
 
 export default function Carousel() {
