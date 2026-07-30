@@ -465,14 +465,19 @@ export default function ThreeDMap({ onOpenDatenschutz }: ThreeDMapProps = {}) {
   };
 
   return (
-    <section id="map-finder" className="relative content-width px-6 md:px-12 py-16 bg-canvas-soft dark:bg-primary-deep" style={{ backgroundImage: 'url(/elemente/Backgroundelement_PLACEHOLDER.webp)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+    <section id="map-finder" className="relative content-width px-6 md:px-12 py-16 bg-canvas-soft dark:bg-primary-deep overflow-hidden">
+      <div
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{ backgroundImage: 'url(/elemente/Backgroundelement_PLACEHOLDER.webp)', backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(1.55) saturate(0.85)' }}
+        aria-hidden="true"
+      />
       {/* ARIA Live Region for accessibility announcements */}
       <div className="sr-only" aria-live="polite" role="status">
         {announcement}
       </div>
 
       {/* Section Heading */}
-      <div className="mb-6">
+      <div className="relative z-10 mb-6">
         <IllustratedHeading
           text="Wo gibt es Atzengold?"
           src="/elemente/HEADLINE5_WoGibtEsAtzengold.png"
@@ -481,7 +486,7 @@ export default function ThreeDMap({ onOpenDatenschutz }: ThreeDMapProps = {}) {
         <p className="text-sm md:text-base mt-2 max-w-2xl font-bold" style={{ color: '#edcea7' }}>Hier werden alle unsere Bezugsquellen gelistet — von der gemütlichen Kneipe über den Späti bis zur Gastronomie. Täglich frisch geliefert, solange der Vorrat reicht.</p>
       </div>
 
-      <div className="flex flex-col overflow-hidden shadow-2xl border border-brand-dark-900/10 dark:border-canvas/10 bg-canvas dark:bg-brand-dark-900">
+      <div className="relative z-10 flex flex-col overflow-hidden shadow-2xl border border-brand-dark-900/10 dark:border-canvas/10 bg-canvas dark:bg-brand-dark-900">
 
         {/* Mobile View Toggles */}
         <div className="flex lg:hidden bg-canvas-soft dark:bg-brand-dark-900 border-b border-ink/10 dark:border-canvas/10 p-2 justify-center gap-2">
@@ -835,7 +840,7 @@ export default function ThreeDMap({ onOpenDatenschutz }: ThreeDMapProps = {}) {
         </div>
       </div>
 
-      <div className="mt-10">
+      <div className="relative z-10 mt-10">
         <NewsletterSignup lang="de" onOpenDatenschutz={onOpenDatenschutz} />
       </div>
     </section>

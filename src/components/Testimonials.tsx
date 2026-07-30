@@ -148,7 +148,12 @@ export default function Testimonials({ lang = 'de' }: { lang?: string }) {
   const thirdColumn = testimonials.slice(6, 9);
 
   return (
-    <section className="content-width px-6 sm:px-12 bg-canvas dark:bg-primary-deep pt-6 pb-12 md:py-32 relative overflow-hidden" style={{ backgroundImage: 'url(/elemente/Backgroundelement_PLACEHOLDER.webp)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+    <section className="content-width px-6 sm:px-12 bg-canvas dark:bg-primary-deep pt-6 pb-12 md:py-32 relative overflow-hidden">
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ backgroundImage: 'url(/elemente/Backgroundelement_PLACEHOLDER.webp)', backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(1.55) saturate(0.85)' }}
+        aria-hidden="true"
+      />
       <div className="relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
