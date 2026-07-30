@@ -969,7 +969,7 @@ export default function BrandHub({ lang, isOpen, onClose, onTriggerNotification,
                           backgroundImage: 'linear-gradient(to right, var(--color-ink) 1px, transparent 1px), linear-gradient(to bottom, var(--color-ink) 1px, transparent 1px)'
                         }}
                       />
-                      <div className="absolute top-0 right-0 w-48 h-48 rounded-full blur-2xl pointer-events-none" style={{ backgroundColor: 'oklch(0.42 0.13 165.0 / 0.1)' }} />
+                      <div className="absolute top-0 right-0 w-48 h-48 rounded-full blur-2xl pointer-events-none" style={{ backgroundColor: 'oklch(0.53 0.118 160.4 / 0.1)' }} />
 
                       {/* Top Header line of deck */}
                       <div className="relative flex justify-between items-center border-b border-brand-dark-900 pb-3">

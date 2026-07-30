@@ -12,7 +12,7 @@
   /* brand-forest: #058054  |  brand-cream: #edcea7  |  brand-gold: #d38b0d */
   /* ── WCAG AAA color system (design.md has full ratio table) ── */
 
-  --color-brand-forest: oklch(0.42 0.13 165.0);
+  --color-brand-forest: oklch(0.53 0.118 160.4);
   --color-brand-cream:  oklch(0.85 0.04 75.0);
   --color-brand-gold:   oklch(0.65 0.15 75.0);
 
@@ -21,32 +21,32 @@
   --color-canvas-soft: oklch(0.85 0.04 75.0);
 
   /* Light Mode Text — EIN einziges Markengrün (#058054), keine Abstufungen */
-  --color-ink: oklch(0.42 0.13 165.0);
-  --color-ink-secondary: oklch(0.42 0.13 165.0);
-  --color-ink-mute: oklch(0.42 0.13 165.0);
+  --color-ink: oklch(0.53 0.118 160.4);
+  --color-ink-secondary: oklch(0.53 0.118 160.4);
+  --color-ink-mute: oklch(0.53 0.118 160.4);
 
   /* Primary Brand (forest green) — identisch zu ink, EIN Grün für die ganze Seite */
-  --color-primary: oklch(0.42 0.13 165.0);
-  --color-primary-deep: oklch(0.42 0.13 165.0);
-  --color-primary-press: oklch(0.42 0.13 165.0);
-  --color-primary-soft: oklch(0.42 0.13 165.0 / 0.15);
-  --color-fresh: oklch(0.42 0.13 165.0);
+  --color-primary: oklch(0.53 0.118 160.4);
+  --color-primary-deep: oklch(0.53 0.118 160.4);
+  --color-primary-press: oklch(0.53 0.118 160.4);
+  --color-primary-soft: oklch(0.53 0.118 160.4 / 0.15);
+  --color-fresh: oklch(0.53 0.118 160.4);
 
   /* Gold Accent (decorative — NOT for body text) */
   --color-accent: oklch(0.68 0.12 82.0);
   --color-accent-hover: oklch(0.60 0.11 82.0);
   --color-accent-soft: oklch(0.68 0.12 82.0 / 0.15);
-  --color-accent-text: oklch(0.42 0.13 165.0);
-  --color-on-accent: oklch(0.42 0.13 165.0);
+  --color-accent-text: oklch(0.53 0.118 160.4);
+  --color-on-accent: oklch(0.53 0.118 160.4);
 
   /* Dark Mode */
   --color-on-primary: oklch(0.85 0.04 75.0);
-  --color-brand-dark-900: oklch(0.42 0.13 165.0);
+  --color-brand-dark-900: oklch(0.53 0.118 160.4);
 
   /* Utilities */
-  --color-hairline: oklch(0.42 0.13 165.0 / 0.08);
-  --color-hairline-input: oklch(0.42 0.13 165.0 / 0.25);
-  --color-shadow-primary: oklch(0.42 0.13 165.0 / 0.15);
+  --color-hairline: oklch(0.53 0.118 160.4 / 0.08);
+  --color-hairline-input: oklch(0.53 0.118 160.4 / 0.25);
+  --color-shadow-primary: oklch(0.53 0.118 160.4 / 0.15);
 
 }
 
@@ -132,7 +132,7 @@
     line-height: 1.0;
     letter-spacing: normal;
     font-weight: 400;
-    text-shadow: 1px 1px 0px oklch(0.42 0.13 165.0 / 0.3);
+    text-shadow: 1px 1px 0px oklch(0.53 0.118 160.4 / 0.3);
   }
   html.dark .text-display-xxl {
     text-shadow: 1px 1px 0px oklch(0.85 0.04 75.0 / 0.2);
