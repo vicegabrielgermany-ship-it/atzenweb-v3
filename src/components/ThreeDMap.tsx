@@ -340,7 +340,7 @@ export default function ThreeDMap({ onOpenDatenschutz }: ThreeDMapProps = {}) {
     });
   }, [viewport.latitude, viewport.longitude]);
 
-  // Filter and sort the results
+  // Filter and sort the results (used for the left-hand results list, scoped to the search radius)
   const filteredVenues = useMemo(() => {
     return venuesWithDynamicDistance
       .filter(venue => {
@@ -355,13 +355,28 @@ export default function ThreeDMap({ onOpenDatenschutz }: ThreeDMapProps = {}) {
       .sort((a, b) => a.distance - b.distance);
   }, [venuesWithDynamicDistance, radius, filters]);
 
+  // Venues shown as pins on the map: apply only the explicit checkbox filters, NOT the
+  // search radius. The radius is relative to the viewport center, so tying map markers to
+  // it meant panning/zooming out never revealed more pins — they were filtered out before
+  // clustering ever ran. The list panel still respects the radius via filteredVenues above.
+  const mapVenues = useMemo(() => {
+    return venuesWithDynamicDistance.filter(venue => {
+      if (filters.openNow && !venue.isOpen) return false;
+      if (filters.food && !venue.hasFood) return false;
+      if (filters.dogFriendly && !venue.dogFriendly) return false;
+      if (filters.gastronomy && !venue.isGastronomy) return false;
+      if (filters.retail && venue.isGastronomy) return false;
+      return true;
+    });
+  }, [venuesWithDynamicDistance, filters]);
+
   const points = useMemo(() => {
-    return filteredVenues.map(venue => ({
+    return mapVenues.map(venue => ({
       type: "Feature" as const,
       properties: { cluster: false, venueId: venue.id, venue },
       geometry: { type: "Point" as const, coordinates: [venue.longitude, venue.latitude] }
     }));
-  }, [filteredVenues]);
+  }, [mapVenues]);
 
   const { clusters, supercluster } = useSupercluster({
     points,
