@@ -403,6 +403,15 @@ export default function ThreeDMap({ onOpenDatenschutz }: ThreeDMapProps = {}) {
     }
   };
 
+  // Belt-and-braces: recompute bounds whenever the viewport changes, instead of relying
+  // solely on the map's onMove firing. Previously bounds only got set once on initial
+  // onLoad and never again in practice, so panning/zooming (via buttons, search, or scroll)
+  // never revealed pins outside that first tiny bounding box.
+  useEffect(() => {
+    const t = setTimeout(updateBounds, 50);
+    return () => clearTimeout(t);
+  }, [viewport.zoom, viewport.latitude, viewport.longitude]);
+
   // Dynamic screen reader announcements
   useEffect(() => {
     const filterDesc = [];
