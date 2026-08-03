@@ -286,7 +286,7 @@ export default function App() {
         {!isVerified && <AgeGate lang={lang} onVerified={handleVerified} />}
         <div className="flex justify-center">
           <Sidebar lang={lang} onLangChange={handleLanguageSwitch} isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} onLogoClick={() => { setCurrentPage('home'); window.location.hash = ''; }} />
-          <div className="min-w-0 w-full">
+          <div className="min-w-0">
             <MerchShop lang={lang} onAddCartFeedback={handleTriggerNotification} />
             {checkoutOrderId && <CheckoutSuccess lang={lang} orderId={checkoutOrderId} onClose={handleCheckoutClose} />}
             {showCheckoutCancel && <CheckoutCancelOverlay lang={lang} onClose={handleCheckoutClose} />}
