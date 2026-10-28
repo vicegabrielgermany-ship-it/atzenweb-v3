@@ -27,9 +27,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nerko+One&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- Klaro managed script example -->
-    <script type="text/plain" data-type="application/javascript" data-name="marketing-analytics">
-      console.log("MARKETING SCRIPT EXECUTED: Klaro has permitted this script to run.");
+    <!-- Google Analytics 4 (G-BQ0YX2LX5P) – laedt erst nach Cookie-Zustimmung (Klaro: marketing-analytics) -->
+    <script type="text/plain" data-type="text/javascript" data-name="marketing-analytics" data-src="https://www.googletagmanager.com/gtag/js?id=G-BQ0YX2LX5P" async></script>
+    <script type="text/plain" data-type="text/javascript" data-name="marketing-analytics">
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-BQ0YX2LX5P', { anonymize_ip: true });
     </script>
   </head>
   <body>
