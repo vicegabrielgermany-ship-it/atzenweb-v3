@@ -1,0 +1,5 @@
+Schrift: UnifrakturCook (Gewicht 700)
+Gestaltung: J. "Mach" Wust / UnifrakturCook-Projekt
+Quelle: Google Fonts (https://fonts.google.com/specimen/UnifrakturCook), heruntergeladen am 31.10.2026
+Lizenz: SIL Open Font License, Version 1.1 – https://openfontlicense.org
+Die Schrift darf frei verwendet, eingebettet und weitergegeben werden; sie darf nicht einzeln verkauft werden.

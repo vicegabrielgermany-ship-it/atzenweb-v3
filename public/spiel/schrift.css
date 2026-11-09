@@ -1,0 +1,9 @@
+/* UnifrakturCook (Fraktur), lokal eingebunden – kein Abruf bei Google.
+   Lizenz: SIL Open Font License 1.1 (siehe LIZENZ-SCHRIFT.txt). */
+@font-face {
+  font-family: "UnifrakturCook";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("unifrakturcook-700.woff2") format("woff2");
+}
