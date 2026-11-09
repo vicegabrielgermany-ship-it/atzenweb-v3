@@ -16,6 +16,7 @@ import NotificationToast from './components/NotificationToast';
 import InstagramFeed from './components/InstagramFeed';
 import Testimonials from './components/Testimonials';
 import Sidebar from './components/Sidebar';
+import { SpielLeiste } from './components/SpielTeaser';
 import RootsSection from './components/RootsSection';
 import Footer from './components/Footer';
 import CheckoutCancelOverlay from './components/CheckoutCancelOverlay';
@@ -432,6 +433,8 @@ export default function App() {
           </div>
         </div>
       </div>
+
+      <SpielLeiste lang={lang} hidden={showCookieBanner || !isVerified || sidebarOpen} />
     </div>
   );
 }
