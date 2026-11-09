@@ -55,7 +55,7 @@ export default function Footer({
                 Tel: <a href="tel:+4917662345740" className="hover:text-accent underline transition-colors">+49 (0) 176 623 457 40</a>
               </div>
               <div>
-                {lang === 'en' ? 'Address: Atzenhofer Str. 76, 90768 Fürth' : 'Adresse: Atzenhofer Str. 76, 90768 Fürth (Atzenhof)'}
+                {lang === 'en' ? 'Address: Nürnberger Str. 97, 90762 Fürth' : 'Adresse: Nürnberger Str. 97, 90762 Fürth'}
               </div>
             </div>
           </div>
@@ -88,7 +88,7 @@ export default function Footer({
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-black/10 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-black/80">
           <div className="text-center md:text-left text-[11px] font-mono">
-            © {CURRENT_YEAR} Atzengold GbR. {lang === 'en' ? 'All rights reserved.' : 'Alle Rechte vorbehalten.'}
+            © {CURRENT_YEAR} Atzengold. {lang === 'en' ? 'All rights reserved.' : 'Alle Rechte vorbehalten.'}
           </div>
 
           <div className="flex gap-4 items-center justify-center">
