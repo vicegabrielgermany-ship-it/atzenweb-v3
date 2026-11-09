@@ -42,9 +42,9 @@ export default function AGB({ lang, isOpen, onClose }: AGBProps) {
             </h2>
             <p className="text-sm text-ink/80 dark:text-canvas/80 leading-relaxed">
               {isEn ? (
-                'These General Terms and Conditions (AGB) apply to all orders placed via the Atzengold online shop at atzengold.vercel.app. The supplier is Atzengold GbR, Atzenhofer Str. 76, 90768 Fürth (Atzenhof).'
+                'These General Terms and Conditions (AGB) apply to all orders placed via the Atzengold online shop at atzengold.vercel.app. The supplier is Gabriel Platt, trading as Atzengold (sole proprietor), Nürnberger Str. 97, 90762 Fürth.'
               ) : (
-                'Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Bestellungen, die über den Atzengold Online-Shop unter atzengold.vercel.app getätigt werden. Vertragspartner ist die Atzengold GbR, Atzenhofer Str. 76, 90768 Fürth (Atzenhof).'
+                'Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Bestellungen, die über den Atzengold Online-Shop unter atzengold.vercel.app getätigt werden. Vertragspartner ist Gabriel Platt, Atzengold (Einzelunternehmen), Nürnberger Str. 97, 90762 Fürth.'
               )}
             </p>
           </section>
