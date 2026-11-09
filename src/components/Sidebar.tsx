@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import X from 'lucide-react/dist/esm/icons/x';
 import { Language } from '../types';
+import { SpielStoerer, SPIEL_URL } from './SpielTeaser';
 
 const Bottle3D = lazy(() => import('./Bottle3D'));
 
@@ -18,6 +19,7 @@ const navLinks = [
   { label: 'STORY', href: '#story' },
   { label: 'MEINUNGEN', href: '#testimonials' },
   { label: 'SHOP', href: '#shop' },
+  { label: 'BIER-ZAPF SPIEL', href: SPIEL_URL },
 ];
 
 function SidebarContent({ lang, onLangChange, onNavClick, onLogoClick }: {
@@ -84,7 +86,8 @@ function SidebarContent({ lang, onLangChange, onNavClick, onLogoClick }: {
         BIER FINDEN
       </a>
 
-      <div className="flex-1 flex flex-col items-center justify-end pb-4">
+      <div className="relative flex-1 flex flex-col items-center justify-end pb-4">
+        <SpielStoerer lang={lang} onClick={onNavClick} />
         <Suspense fallback={
           <div className="w-full aspect-[3/4] bg-ink/5 rounded animate-pulse" />
         }>
