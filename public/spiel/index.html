@@ -125,7 +125,7 @@
   <span class="touch">Auf eine Bahn tippen = hinlaufen · nochmal tippen = zapfen</span>
 </div>
 <div id="rotate"><div class="phone"></div><b>Bitte Handy quer halten</b><span>Das Atzengold Game spielt sich im Querformat am besten.</span></div>
-<nav id="recht" aria-label="Rechtliches"><a id="rImpressum" href="#" target="_blank" rel="noopener">Impressum</a><a href="../datenschutz/" target="_blank" rel="noopener">Datenschutz</a><a href="../teilnahmebedingungen/" target="_blank" rel="noopener">Teilnahmebedingungen</a></nav>
+<nav id="recht" aria-label="Rechtliches"><a id="rImpressum" href="#" target="_blank" rel="noopener">Impressum</a><a href="/spiel/datenschutz/" target="_blank" rel="noopener">Datenschutz</a><a href="/spiel/teilnahmebedingungen/" target="_blank" rel="noopener">Teilnahmebedingungen</a></nav>
 <div id="igtip">Tipp: Oben rechts auf ⋯ tippen und „Im Browser öffnen“ – dann mit Vollbild &amp; Ton</div>
 <div id="fstip"><div class="card">
   <b>Vollbild am iPhone</b>
@@ -143,8 +143,8 @@
       <input id="cName" type="text" maxlength="20" autocomplete="nickname" spellcheck="false"></label>
     <label for="cMail">E-Mail-Adresse (nicht öffentlich, nur für den Code und die Gewinnbenachrichtigung)
       <input id="cMail" type="email" maxlength="120" autocomplete="email"></label>
-    <label class="chk"><input type="checkbox" id="cTerms"><span>Ich habe die <a href="../teilnahmebedingungen/" target="_blank" rel="noopener">Teilnahmebedingungen</a> gelesen, akzeptiere sie und bin mindestens 18 Jahre alt.</span></label>
-    <label class="chk"><input type="checkbox" id="cPublic"><span>Mein Profilname darf mit Punktzahl öffentlich in der Bestenliste stehen. Mehr dazu in den <a href="../datenschutz/" target="_blank" rel="noopener">Datenschutzhinweisen</a>. Ich kann das jederzeit widerrufen.</span></label>
+    <label class="chk"><input type="checkbox" id="cTerms"><span>Ich habe die <a href="/spiel/teilnahmebedingungen/" target="_blank" rel="noopener">Teilnahmebedingungen</a> gelesen, akzeptiere sie und bin mindestens 18 Jahre alt.</span></label>
+    <label class="chk"><input type="checkbox" id="cPublic"><span>Mein Profilname darf mit Punktzahl öffentlich in der Bestenliste stehen. Mehr dazu in den <a href="/spiel/datenschutz/" target="_blank" rel="noopener">Datenschutzhinweisen</a>. Ich kann das jederzeit widerrufen.</span></label>
   </div>
   <div id="claimCode" style="display:none;flex-direction:column;gap:10px">
     <label for="cCode">Code aus der E-Mail
@@ -824,7 +824,7 @@ const FX = {
 };
 
 // ---- Gewinnspiel: Verbindung zum Server (läuft das Spiel ohne Server, bleibt alles wie bisher) ----
-const API = '../api/';
+const API = '/spiel/api/';
 const withTimeout = (p, ms) => Promise.race([p, new Promise((_, no) => setTimeout(() => no(new Error('Zeitüberschreitung')), ms))]);
 const Contest = {
   active: false, mode: 'normal', cfg: null, result: null,
@@ -862,7 +862,7 @@ const Contest = {
   },
 };
 const modeName = id => (MODES.find(m => m.id === id) || {}).name || id;
-function openBoard() { location.href = '../bestenliste/'; }
+function openBoard() { location.href = '/spiel/bestenliste/'; }
 
 // Anmeldung für Top-Ergebnisse: Profilname + E-Mail-Code, danach Platz sichern
 const Claim = {
