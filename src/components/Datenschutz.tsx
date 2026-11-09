@@ -216,7 +216,7 @@ export default function Datenschutz({ lang, isOpen, onClose }: DatenschutzProps)
                   Wir betrachten es als unsere vorrangige Aufgabe, die Vertraulichkeit der von Ihnen bereitgestellten personenbezogenen Daten zu wahren und diese vor unbefugten Zugriffen zu schützen. Deshalb wenden wir äußerste Sorgfalt und modernste Sicherheitsstandards an, um einen maximalen Schutz Ihrer personenbezogenen Daten zu gewährleisten.
                 </p>
                 <p className="text-[11px] font-mono text-ink-mute dark:text-canvas/60">
-                  Zuletzt aktualisiert: Juni 2026 / Atzengold GbR Compliance Office.
+                  Zuletzt aktualisiert: November 2026.
                 </p>
               </div>
 
