@@ -1008,7 +1008,7 @@ export default function BrandHub({ lang, isOpen, onClose, onTriggerNotification,
 
                       {/* Footer specs of the slides */}
                       <div className="relative pt-3 border-t border-ink/10 flex items-center justify-between font-mono text-[8px] text-ink-mute">
-                        <span>ATZENGOLD GbR. ALL RIGHTS RESERVED. GERMANY DE.</span>
+                        <span>ATZENGOLD. ALL RIGHTS RESERVED. GERMANY DE.</span>
                         <span className="text-accent font-bold">[ PROST! ]</span>
                         <span>CONFIDENTIAL // INTERNAL BRAND GUIDELINE DECK</span>
                       </div>
