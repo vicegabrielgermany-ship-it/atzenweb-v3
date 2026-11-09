@@ -241,7 +241,7 @@ export default function CookieBanner({ lang, onConsentSaved, onTriggerNotificati
                     if (onShowImpressum) {
                       onShowImpressum();
                     } else {
-                      alert("Impressum: Atzengold GbR. Germany.");
+                      alert("Impressum: Atzengold, Inhaber Gabriel Platt. Germany.");
                     }
                   }}
                 >
