@@ -76,10 +76,10 @@ export default function Widerrufsrecht({ lang, isOpen, onClose }: Widerrufsrecht
               {isEn ? 'Address for Withdrawal' : 'Widerrufsadresse'}
             </h2>
             <div className="bg-ink/5 dark:bg-canvas/5 rounded-xl p-4 border border-ink/10 dark:border-canvas/10 text-sm text-ink/80 dark:text-canvas/80 space-y-1 font-mono">
-              <p className="font-bold text-ink dark:text-canvas">Atzengold GbR</p>
-              <p>Gabriel Platt</p>
-              <p>Atzenhofer Str. 76</p>
-              <p>90768 Fürth (Atzenhof)</p>
+              <p className="font-bold text-ink dark:text-canvas">Atzengold</p>
+              <p>Inhaber Gabriel Platt</p>
+              <p>Nürnberger Str. 97</p>
+              <p>90762 Fürth</p>
               <p>E-Mail: info@atzengold.net</p>
             </div>
           </section>
@@ -103,7 +103,7 @@ export default function Widerrufsrecht({ lang, isOpen, onClose }: Widerrufsrecht
             </h2>
             <div className="bg-ink/5 dark:bg-canvas/5 rounded-xl p-4 border border-ink/10 dark:border-canvas/10 text-sm text-ink/80 dark:text-canvas/80 leading-relaxed font-mono">
               <p className="mb-4">{isEn ? 'If you wish to withdraw, please fill out this form and send it to us:' : 'Wenn Sie den Vertrag widerrufen wollen, füllen Sie bitte dieses Formular aus und senden Sie es zurück:'}</p>
-              <p className="mb-2">— {isEn ? 'To Atzengold GbR, Atzenhofer Str. 76, 90768 Fürth (Atzenhof), info@atzengold.net' : 'An Atzengold GbR, Atzenhofer Str. 76, 90768 Fürth (Atzenhof), info@atzengold.net'}</p>
+              <p className="mb-2">— {isEn ? 'To Atzengold, owner Gabriel Platt, Nürnberger Str. 97, 90762 Fürth, info@atzengold.net' : 'An Atzengold, Inhaber Gabriel Platt, Nürnberger Str. 97, 90762 Fürth, info@atzengold.net'}</p>
               <p className="mb-2">{isEn ? 'I/We hereby give notice that I/we withdraw from my/our contract of sale of the following goods:' : 'Hiermit widerrufe(n) ich/wir den von mir/uns abgeschlossenen Vertrag über den Kauf der folgenden Waren:'}</p>
               <p className="mb-2">{isEn ? 'Ordered on / Received on:' : 'Bestellt am / Erhalten am:'} _______________</p>
               <p className="mb-2">{isEn ? 'Name of consumer(s):' : 'Name des/der Verbraucher(s):'} _______________</p>
