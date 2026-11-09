@@ -221,7 +221,7 @@ export default function Impressum({ lang, isOpen, onClose }: ImpressumProps) {
                   )}
                 </p>
                 <p className="text-[11px] font-mono text-ink-mute dark:text-canvas/60">
-                  {isEn ? 'Last Updated: June 2026 // Atzengold Corporate Legal' : 'Letzte Aktualisierung: Juni 2026 // Atzengold GbR Rechtsabteilung'}
+                  {isEn ? 'Last Updated: November 2026' : 'Letzte Aktualisierung: November 2026'}
                 </p>
               </div>
 
@@ -239,9 +239,9 @@ export default function Impressum({ lang, isOpen, onClose }: ImpressumProps) {
 
                 <p className="text-sm text-ink dark:text-canvas leading-relaxed">
                   {isEn ? (
-                    "The website and beer brand Atzengold are operated by Gabriel Platt (Atzengold GbR):"
+                    "The website and beer brand Atzengold are operated by Gabriel Platt (sole proprietor, trading as Atzengold):"
                   ) : (
-                    "Die Webseiten, Onlinekanäle sowie die Getränkeproduktion der Marke Atzengold werden von Gabriel Platt betrieben:"
+                    "Die Webseiten, Onlinekanäle sowie die Getränkeproduktion der Marke Atzengold werden von Gabriel Platt als Einzelunternehmen betrieben:"
                   )}
                 </p>
 
@@ -250,9 +250,9 @@ export default function Impressum({ lang, isOpen, onClose }: ImpressumProps) {
                     <p className="text-xs text-ink-secondary dark:text-canvas/70 uppercase tracking-widest font-bold">
                       {isEn ? 'Legal Entity Name' : 'Name des Unternehmens'}
                     </p>
-                    <p className="text-ink dark:text-canvas font-bold select-all">Atzengold GbR</p>
+                    <p className="text-ink dark:text-canvas font-bold select-all">Atzengold (Einzelunternehmen)</p>
                     <button
-                      onClick={() => copyToClipboard('Atzengold GbR', 'entity')}
+                      onClick={() => copyToClipboard('Atzengold (Einzelunternehmen)', 'entity')}
                       className="absolute right-3 top-3 opacity-0 group-hover:opacity-100 transition-opacity p-1 text-ink-mute dark:text-canvas/50 hover:text-accent cursor-pointer"
                       title={isEn ? 'Copy' : 'Kopieren'}
                     >
@@ -262,7 +262,7 @@ export default function Impressum({ lang, isOpen, onClose }: ImpressumProps) {
 
                   <div className="bg-canvas dark:bg-brand-dark-900 border border-ink/10 dark:border-canvas/10 shadow-sm p-4 rounded-xl space-y-1 text-sm font-mono text-ink dark:text-canvas relative group">
                     <p className="text-xs text-ink-secondary dark:text-canvas/70 uppercase tracking-widest font-bold">
-                      {isEn ? 'Authorized Representative / Managing Director' : 'Geschäftsführer / Vertreten durch'}
+                      {isEn ? 'Owner' : 'Inhaber'}
                     </p>
                     <p className="text-ink dark:text-canvas font-bold select-all">Gabriel Platt</p>
                     <button
