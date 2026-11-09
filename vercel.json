@@ -5,8 +5,8 @@
       "destination": "/api/$1"
     },
     {
-      "source": "/spiel/:path*",
-      "destination": "https://atzengold-kaerwa-spiel.vicegabrielgermany.workers.dev/spiel/:path*"
+      "source": "/spiel/(.+)",
+      "destination": "https://atzengold-kaerwa-spiel.vicegabrielgermany.workers.dev/spiel/$1"
     },
     {
       "source": "/(.*)",
