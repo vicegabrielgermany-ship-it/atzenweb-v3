@@ -29,13 +29,20 @@ export function SpielStoerer({ lang, onClick }: { lang: Language; onClick?: () =
       aria-label={en ? 'Beer tap game – win tasty merch' : 'Bier-Zapf Spiel – gewinne lecker Merch'}
       className="absolute z-10 block w-[118px] h-[118px] -top-2 right-0 drop-shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-ink rounded-full"
       initial={{ opacity: 0 }}
-      animate={{ rotate: -360, opacity: 1 }}
-      transition={{ rotate: { duration: 14, ease: 'linear', repeat: Infinity }, opacity: { duration: 0.4 } }}
+      animate={{ opacity: 1 }}
+      transition={{ opacity: { duration: 0.4 } }}
       whileHover={{ scale: 1.1 }}
     >
-      <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full" aria-hidden="true">
+      {/* Nur der Stern dreht sich (gegen den Uhrzeigersinn), die Schrift bleibt stehen */}
+      <motion.svg
+        viewBox="0 0 100 100"
+        className="absolute inset-0 w-full h-full"
+        aria-hidden="true"
+        animate={{ rotate: -360 }}
+        transition={{ duration: 14, ease: 'linear', repeat: Infinity }}
+      >
         <polygon points={STERN_ZACKEN} fill="var(--color-accent)" stroke="var(--color-ink)" strokeWidth="1.6" />
-      </svg>
+      </motion.svg>
       <span className="relative flex flex-col items-center justify-center w-full h-full text-ink text-center leading-tight px-2">
         <span className="text-[13px] font-bold leading-[1.05]">{en ? <>BEER TAP<br />GAME</> : <>BIER-ZAPF<br />SPIEL</>}</span>
         <span className="text-[30px] font-bold leading-[0.9] my-0.5" aria-hidden="true">→</span>
