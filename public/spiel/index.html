@@ -514,6 +514,8 @@ const MODES = [
 ];
 let settings = { mode: 1, music: true, specials: { runde: true, zeit: true, magnet: true } };
 try { const s = JSON.parse(localStorage.getItem('atzengold-settings')); if (s) settings = { ...settings, ...s, specials: { ...settings.specials, ...s.specials } }; } catch (e) {}
+settings.mode = 1;   // nur noch ein Modus: das Spiel wird von selbst immer schneller
+settings.specials = { runde: true, zeit: true, magnet: true };   // Specials sind immer dabei (nur Info im Menü)
 if (settings.musicChoice === undefined) settings.music = true;   // Musik ist an, bis man sie selbst ausschaltet
 let musicTouched = false;
 if (settings.buttonsOn === undefined) settings.buttonsOn = true;   // Tasten links/rechts am Handy: standardmäßig an (im Menü abschaltbar)
@@ -1399,38 +1401,37 @@ function label(txt, x, y, size = 15, col = '#3a2a1a', align = 'center') {
   ctx.fillStyle = col; ctx.font = `700 ${size}px system-ui, sans-serif`; ctx.textAlign = align; ctx.textBaseline = 'middle';
   ctx.fillText(txt, x, y);
 }
-function uiButton(x, y, w, h, text, action, { sub, selected, big } = {}) {
+// Knöpfe: Schalter sind grün = an, gelb = aus. Alle anderen Knöpfe sind gelb.
+const BRAND_GREEN = '#058054';
+function uiButton(x, y, w, h, text, action, { sub, big, toggle, on, blink } = {}) {
   const focused = addBtn(x, y, w, h, action);
-  if (focused) { ctx.strokeStyle = GREEN; ctx.lineWidth = 4; ctx.beginPath(); ctx.roundRect(x - 5, y - 5, w + 10, h + 10, 14); ctx.stroke(); }
-  ctx.fillStyle = selected ? GOLD : '#f6ead0'; ctx.strokeStyle = BLACK; ctx.lineWidth = 3;
+  if (focused) { ctx.strokeStyle = BRAND_GREEN; ctx.lineWidth = 4; ctx.beginPath(); ctx.roundRect(x - 5, y - 5, w + 10, h + 10, 14); ctx.stroke(); }
+  const green = toggle && on;
+  ctx.fillStyle = green ? BRAND_GREEN : (blink ? '#FFE27A' : GOLD); ctx.strokeStyle = BLACK; ctx.lineWidth = 3;
   ctx.beginPath(); ctx.roundRect(x, y, w, h, 10); ctx.fill(); ctx.stroke();
-  ctx.fillStyle = BLACK; ctx.font = `700 ${big ? 30 : 21}px ${FONT}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillStyle = green ? FOAM : BLACK; ctx.font = `700 ${big ? 30 : 21}px ${FONT}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   ctx.fillText(text, x + w / 2, y + h / 2 - (sub ? 8 : 0));
-  if (sub) label(sub, x + w / 2, y + h / 2 + 13, 12);
+  if (sub) label(sub, x + w / 2, y + h / 2 + 13, 12, green ? FOAM : '#3a2a1a');
 }
 
 function drawMainMenu() {
-  overlay(150, 112, 660, 470);
+  overlay(150, 112, 660, isTouch() ? 460 : 435);
   logoTitle(W / 2, 178, 72);
   logoText('Das Kärwa-Spiel', W / 2, 237, 30);   // gleiche Größe wie „Los geht's“   // Untertitel im Stil des Atzengold-Schriftzugs
-  if (Contest.active) label('Gewinnspiel läuft im Modus ' + modeName(Contest.mode), W / 2, 270, 13, '#7a3f00');
-  label('Spielmodus', W / 2, 290);
-  MODES.forEach((m, k) => uiButton(190 + k * 205, 304, 190, 52, m.name,
-    () => { settings.mode = k; saveSettings(); hi = loadHi(); beep(600, .04); },
-    { sub: m.desc, selected: settings.mode === k }));
-  label('Specials an- und ausschalten (im Spiel mit 1, 2, 3 oder Klick)', W / 2, 380);
-  SPECIALS.forEach((s, k) => {
-    const on = settings.specials[s.id];
-    uiButton(190 + k * 205, 394, 190, 52, s.key + '  ' + s.name,
-      () => { settings.specials[s.id] = !on; saveSettings(); beep(on ? 300 : 700, .04); },
-      { sub: (on ? '✔ an · ' : '✘ aus · ') + s.desc, selected: on });
+  label('Specials – im Spiel mit Taste 1, 2, 3 oder per Klick einsetzen', W / 2, 292);
+  SPECIALS.forEach((s, k) => {   // nur Info, keine Knöpfe
+    const cx = 285 + k * 205;
+    drawSpecial(s, cx - 33, 325); ctx.globalAlpha = 1;
+    ctx.fillStyle = BLACK; ctx.font = `700 19px ${FONT}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(s.key + '  ' + s.name, cx, 373);
+    label(s.desc, cx, 392, 12);
   });
-  uiButton(350, 470, 260, 58, 'Los geht\'s!', startGame, { big: true, selected: true });
+  uiButton(350, 414, 260, 58, 'Los geht\'s!', startGame, { big: true });
   const blink = !musicTouched && !settings.music && Math.sin(G.t * 6) > 0;   // blinkt gelb, bis man ihn einmal antippt
-  uiButton(625, 476, 165, 46, settings.music ? '♪ Musik an' : '♪ Musik aus', toggleMusic, { selected: settings.music || blink });
-  uiButton(170, 476, 165, 46, settings.sfx !== false ? '🔊 Effekte an' : '🔇 Effekte aus', toggleSfx, { selected: settings.sfx !== false });
-  if (isTouch()) uiButton(330, 537, 300, 30, settings.buttonsOn ? 'Tasten-Steuerung: an' : 'Tasten-Steuerung: aus (nur Tippen)', toggleButtons, { selected: settings.buttonsOn });
-  label('↑/↓ Bahn · ←/→ laufen · Leertaste zapfen · P Pause · T Musik · Bestwert ' + MODE().name + ': ' + hi, W / 2, isTouch() ? 578 : 558, 13);
+  uiButton(625, 420, 165, 46, settings.music ? '♪ Musik an' : '♪ Musik aus', toggleMusic, { toggle: true, on: settings.music, blink });
+  uiButton(170, 420, 165, 46, settings.sfx !== false ? '🔊 Effekte an' : '🔇 Effekte aus', toggleSfx, { toggle: true, on: settings.sfx !== false });
+  if (isTouch()) uiButton(330, 487, 300, 30, settings.buttonsOn ? 'Tasten-Steuerung: an' : 'Tasten-Steuerung: aus (nur Tippen)', toggleButtons, { toggle: true, on: settings.buttonsOn });
+  label('↑/↓ Bahn · ←/→ laufen · Leertaste zapfen · P Pause · T Musik · Bestwert: ' + hi, W / 2, isTouch() ? 548 : 520, 13);
   if (Contest.active) uiButton(164, 124, 146, 32, '🏆 Bestenliste', openBoard);
   if (Contest.active) drawPrizeBadge(800, 178);   // Preise nur zeigen, wenn das Gewinnspiel wirklich läuft
   const hint = settings.music && !audioRunning() ? '♪ Einmal tippen – dann läuft die Musik'
@@ -1468,10 +1469,10 @@ function drawPrizeBadge(cx, cy) {
 function drawPauseMenu() {
   overlay(300, 120, 360, 452);
   titleText('Pause', W / 2, 175, 60);
-  uiButton(350, 228, 260, 50, 'Weiter', resumeGame, { selected: true });
+  uiButton(350, 228, 260, 50, 'Weiter', resumeGame);
   uiButton(350, 292, 260, 50, 'Neu starten', startGame);
-  uiButton(350, 356, 126, 50, settings.music ? '♪ Musik an' : '♪ aus', toggleMusic, { selected: settings.music });
-  uiButton(484, 356, 126, 50, settings.sfx !== false ? '🔊 Effekte' : '🔇 aus', toggleSfx, { selected: settings.sfx !== false });
+  uiButton(350, 356, 126, 50, settings.music ? '♪ Musik an' : '♪ aus', toggleMusic, { toggle: true, on: settings.music });
+  uiButton(484, 356, 126, 50, settings.sfx !== false ? '🔊 Effekte' : '🔇 aus', toggleSfx, { toggle: true, on: settings.sfx !== false });
   uiButton(350, 420, 260, 50, 'Hauptmenü', toMenu);
   uiButton(350, 484, 260, 44, '? Hilfe & Specials', () => openHelp('paused'));
   label('P oder Esc: weiterspielen', W / 2, 552, 13);
@@ -1503,10 +1504,10 @@ function drawHelp() {
     drawSpecial(s, 200, y);
     ctx.fillStyle = BLACK; ctx.font = `700 22px ${FONT}`; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
     ctx.fillText(s.name, 284, y + 10);
-    label(s.desc + (settings.specials[s.id] ? '' : ' · im Hauptmenü ausgeschaltet'), 284, y + 32, 13, '#3a2a1a', 'left');
+    label(s.desc, 284, y + 32, 13, '#3a2a1a', 'left');
   });
   label('Am Anfang je 1×, dann alle 1.000 Punkte und nach jeder Runde ein neues (höchstens 3).', W / 2, 482, 13);
-  uiButton(350, 504, 260, 52, 'Weiterspielen', closeHelp, { selected: true });
+  uiButton(350, 504, 260, 52, 'Weiterspielen', closeHelp);
 }
 
 function drawRoundEnd() {
@@ -1516,7 +1517,7 @@ function drawRoundEnd() {
   bars(W / 2 - 80, 318, 100);
   outlinedText('+' + G.roundBonus, W / 2 + 50, 286, 40, GOLD, 'center');
   label(G.roundSpecial ? 'Belohnung: ' + G.roundSpecial + ' +1' : 'Rundenbonus eingesackt', W / 2, 346, 16);
-  uiButton(350, 380, 260, 52, 'Nächste Runde', nextRound, { selected: true });
+  uiButton(350, 380, 260, 52, 'Nächste Runde', nextRound);
   label('Runde ' + (G.round + 1) + ': ' + goalFor(G.round + 1) + ' Bier · geht in ' + Math.ceil(G.roundTimer) + ' s weiter', W / 2, 470, 14);
 }
 
@@ -1533,17 +1534,17 @@ function contestLine() {
 }
 function drawGameOver() {
   overlay(250, 104, 460, 476);
-  titleText('Prost, aus!', W / 2, 152, 60);
+  titleText('Aus is!', W / 2, 152, 60);
   bars(W / 2 - 70, 236, 70);
   outlinedText(String(G.score), W / 2 + 30, 214, 40, GOLD, 'center');
   label('Bis Runde ' + G.round + ' gekommen', W / 2, 258, 16);
-  label(G.newHi ? 'Neuer Bestwert im Modus ' + MODE().name + '!' : 'Bestwert ' + MODE().name + ': ' + hi, W / 2, 282, 16);
+  label(G.newHi ? 'Neuer Bestwert!' : 'Bestwert: ' + hi, W / 2, 282, 16);
   const line = contestLine();
   if (line) label(line, W / 2, 310, 14, line.startsWith('✔') ? GREEN : '#3a2a1a');
   let y = 332;
   const canClaim = !replayData && Contest.result && Contest.result.qualifies && !Contest.result.claimed;
-  if (canClaim) { uiButton(350, y, 260, 50, '🏆 Platz sichern', () => Claim.open(), { selected: true }); y += 60; }
-  uiButton(350, y, 260, 50, 'Nochmal', startGame, { selected: !canClaim }); y += 60;
+  if (canClaim) { uiButton(350, y, 260, 50, '🏆 Platz sichern', () => Claim.open()); y += 60; }
+  uiButton(350, y, 260, 50, 'Nochmal', startGame); y += 60;
   if (Contest.active) { uiButton(350, y, 125, 46, 'Bestenliste', openBoard); uiButton(485, y, 125, 46, 'Hauptmenü', toMenu); }
   else uiButton(350, y, 260, 50, 'Hauptmenü', toMenu);
 }
