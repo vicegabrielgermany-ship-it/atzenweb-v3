@@ -1434,8 +1434,7 @@ function drawMainMenu() {
   label('↑/↓ Bahn · ←/→ laufen · Leertaste zapfen · P Pause · T Musik · Bestwert: ' + hi, W / 2, isTouch() ? 548 : 520, 13);
   if (Contest.active) uiButton(164, 124, 146, 32, '🏆 Bestenliste', openBoard);
   if (Contest.active) drawPrizeBadge(800, 178);   // Preise nur zeigen, wenn das Gewinnspiel wirklich läuft
-  const hint = settings.music && !audioRunning() ? '♪ Einmal tippen – dann läuft die Musik'
-             : (!musicTouched && !settings.music ? '♪ Mit Wiesn-Musik? Musik-Knopf antippen!' : '');
+  const hint = !musicTouched && !settings.music ? '♪ Mit Wiesn-Musik? Musik-Knopf antippen!' : '';
   if (hint) {
     ctx.globalAlpha = .75 + .25 * Math.sin(G.t * 5);
     outlinedText(hint, W / 2, 92, 24, '#FFE27A', 'center', 4);
