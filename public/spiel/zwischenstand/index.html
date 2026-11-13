@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Kärwa-Spiel – Zwischenstand</title>
+<title>Bier-Zapf-Spiel – Zwischenstand</title>
 <link rel="stylesheet" href="/spiel/schrift.css">
 <style>
   :root { --beige:#E2CDAA; --gruen:#058054; --gold:#C1953A; --dunkel:#04583A; }
@@ -63,7 +63,7 @@ function zeichnen() {
 
   // Kopf (unter dem Bereich, den Instagram oben überdeckt)
   if (logo.complete && logo.naturalWidth) ctx.drawImage(logo, W / 2 - 170, 210, 340, 340);
-  text('Das Kärwa-Spiel', W / 2, 610, 64, GRUEN, { font: FRAKTUR, gewicht: 400, kontur: 0 });
+  text('Das Bier-Zapf-Spiel', W / 2, 610, 64, GRUEN, { font: FRAKTUR, gewicht: 400, kontur: 0 });
   text('Zwischenstand', W / 2, 715, 120, GOLD_HELL, { font: FRAKTUR, gewicht: 400, kontur: 14 });
   const jetzt = new Date();
   text('Stand: ' + jetzt.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ', '
