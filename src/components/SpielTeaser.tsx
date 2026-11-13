@@ -52,23 +52,21 @@ export function SpielStoerer({ lang, onClick }: { lang: Language; onClick?: () =
   );
 }
 
-/** Leiste am unteren Rand fürs Handy: erscheint nach dem ersten Bildschirm, lässt sich wegklicken. */
+/** Leiste am unteren Rand fürs Handy: erscheint 2 Sekunden nach dem Seitenaufruf, lässt sich wegklicken. */
 export function SpielLeiste({ lang, hidden }: { lang: Language; hidden: boolean }) {
-  const [weit, setWeit] = useState(false);
+  const [bereit, setBereit] = useState(false);
   const [zu, setZu] = useState(() => {
     try { return sessionStorage.getItem('ag_spiel_leiste_zu') === '1'; } catch { return false; }
   });
 
   useEffect(() => {
-    const onScroll = () => setWeit(window.scrollY > window.innerHeight * 0.8);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    const t = setTimeout(() => setBereit(true), 2000);
+    return () => clearTimeout(t);
   }, []);
 
   if (!gewinnspielLaeuft()) return null;
   const en = lang === 'en';
-  const sichtbar = weit && !zu && !hidden;
+  const sichtbar = bereit && !zu && !hidden;
   const schliessen = () => {
     setZu(true);
     try { sessionStorage.setItem('ag_spiel_leiste_zu', '1'); } catch { /* egal */ }
@@ -89,12 +87,22 @@ export function SpielLeiste({ lang, hidden }: { lang: Language; hidden: boolean 
         >
           <div className="flex items-center gap-2 bg-accent border-2 border-ink shadow-lg pl-3 pr-1 py-1.5">
             <a href={SPIEL_URL} className="flex-1 min-w-0 flex items-center gap-2 text-ink no-underline">
-              <span aria-hidden="true" className="text-xl leading-none">🍺</span>
-              <span className="min-w-0 leading-tight">
+              <span className="relative flex-1 min-w-0 leading-tight">
                 <span className="block text-[11px] font-bold tracking-wide">{en ? 'BEER TAP GAME' : 'BIER-ZAPF SPIEL'}</span>
                 <span className="block text-[13px] font-bold truncate">{en ? 'Win tasty merch' : 'Gewinne lecker Merch'}</span>
+                {/* Bierkrug saust unter der Schrift von links nach rechts durch, immer wieder */}
+                <span aria-hidden="true" className="block relative h-5 overflow-hidden">
+                  <motion.span
+                    className="absolute inset-y-0 left-0 flex items-center justify-end w-[calc(100%+1.5rem)]"
+                    initial={{ x: '-100%' }}
+                    animate={{ x: ['-100%', '0%'] }}
+                    transition={{ duration: 2.2, ease: 'linear', repeat: Infinity, repeatDelay: 0.6 }}
+                  >
+                    <span className="block w-6 text-center text-base leading-none">🍺</span>
+                  </motion.span>
+                </span>
               </span>
-              <span className="ml-auto shrink-0 bg-ink text-canvas text-[20px] leading-none font-bold px-4 py-2" aria-hidden="true">
+              <span className="shrink-0 bg-ink text-canvas text-[20px] leading-none font-bold px-4 py-2" aria-hidden="true">
                 →
               </span>
             </a>
