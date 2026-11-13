@@ -120,7 +120,7 @@
   </div>
 </div>
 <div class="hint">
-  <span class="desk">↑/↓ Bahn wechseln · ←/→ an der Bar laufen · Leertaste zapfen · 1/2/3 Specials · P Pause · T Musik</span>
+  <span class="desk">↑/↓ Bahn wechseln · Leertaste zapfen · 1/2/3 Specials · P Pause · T Musik</span>
   <span class="touch">Auf eine Bahn tippen = hinlaufen · nochmal tippen = zapfen</span>
 </div>
 <div id="rotate"><div class="phone"></div><b>Bitte Handy quer halten</b><span>Das Atzengold Game spielt sich im Querformat am besten.</span></div>
@@ -759,8 +759,8 @@ addEventListener('keydown', e => {
   if (k === 'h' || k === 'H' || k === '?') { state === 'help' ? closeHelp() : openHelp(); e.preventDefault(); return; }
   if (k === 't' || k === 'T') { toggleMusic(); return; }
   if (k === 'e' || k === 'E') { toggleSfx(); return; }
-  if (k === 'ArrowLeft' || k === 'a') { if (state === 'play') { if (!game.keys.left) act('L1'); } else navMove(-1); e.preventDefault(); }
-  else if (k === 'ArrowRight' || k === 'd') { if (state === 'play') { if (!game.keys.right) act('R1'); } else navMove(1); e.preventDefault(); }
+  if (k === 'ArrowLeft' || k === 'a') { if (state !== 'play') navMove(-1); e.preventDefault(); }   // links/rechts nur noch im Menü (kein Laufen an der Bar)
+  else if (k === 'ArrowRight' || k === 'd') { if (state !== 'play') navMove(1); e.preventDefault(); }
   else if (k === 'ArrowUp' || k === 'w') { if (!e.repeat || state !== 'play') up(); e.preventDefault(); }
   else if (k === 'ArrowDown' || k === 's') { if (!e.repeat || state !== 'play') down(); e.preventDefault(); }
   else if (k === ' ' || k === 'Enter') { pour(); e.preventDefault(); }
@@ -768,12 +768,6 @@ addEventListener('keydown', e => {
   else if (k === '2' || k === 'z') useSpecial('zeit');
   else if (k === '3' || k === 'm') useSpecial('magnet');
 });
-addEventListener('keyup', e => {
-  if (!game) return;
-  if ((e.key === 'ArrowLeft' || e.key === 'a') && game.keys.left) act('L0');
-  if ((e.key === 'ArrowRight' || e.key === 'd') && game.keys.right) act('R0');
-});
-addEventListener('blur', () => { if (!game) return; if (game.keys.left) act('L0'); if (game.keys.right) act('R0'); });
 // Spiel verlassen oder Handy gesperrt: Spiel pausieren und Musik aus; beim Zurückkommen nur im Menü wieder an
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) { pauseGame(); Music.stop(); }
@@ -1424,7 +1418,7 @@ function drawMainMenu() {
   uiButton(625, 420, 165, 46, settings.music ? '♪ Musik an' : '♪ Musik aus', toggleMusic, { toggle: true, on: settings.music, blink });
   uiButton(170, 420, 165, 46, settings.sfx !== false ? '🔊 Effekte an' : '🔇 Effekte aus', toggleSfx, { toggle: true, on: settings.sfx !== false });
   if (isTouch()) uiButton(330, 487, 300, 30, settings.buttonsOn ? 'Tasten-Steuerung: an' : 'Tasten-Steuerung: aus (nur Tippen)', toggleButtons, { toggle: true, on: settings.buttonsOn });
-  label('↑/↓ Bahn · ←/→ laufen · Leertaste zapfen · P Pause · T Musik · Bestwert: ' + hi, W / 2, isTouch() ? 548 : 520, 13);
+  label('↑/↓ Bahn · Leertaste zapfen · P Pause · T Musik · Bestwert: ' + hi, W / 2, isTouch() ? 548 : 520, 13);
   if (Contest.active) uiButton(164, 124, 146, 32, '🏆 Bestenliste', openBoard);
   if (Contest.active) drawPrizeBadge(800, 178);   // Preise nur zeigen, wenn das Gewinnspiel wirklich läuft
   const hint = !musicTouched && !settings.music ? '♪ Mit Wiesn-Musik? Musik-Knopf antippen!' : '';
@@ -1488,7 +1482,7 @@ function drawHelp() {
   titleText('Hilfe & Specials', W / 2, 115, 46);
   label('Steuerung', W / 2, 160, 16);
   label('Handy: Bahn antippen = hinlaufen · nochmal antippen = zapfen · Knöpfe links/rechts', W / 2, 184, 14);
-  label('Tastatur: ↑/↓ Bahn · ←/→ an der Bar laufen · Leertaste zapfen · P Pause · T Musik · H Hilfe', W / 2, 206, 14);
+  label('Tastatur: ↑/↓ Bahn · Leertaste zapfen · P Pause · T Musik · H Hilfe', W / 2, 206, 14);
   label('Leere Krüge am Fass auffangen! 3 Fehler am Stück = die Halle wird geräumt.', W / 2, 228, 14);
   label('Specials (Taste 1, 2, 3 oder unten antippen)', W / 2, 266, 16);
   SPECIALS.forEach((s, k) => {
