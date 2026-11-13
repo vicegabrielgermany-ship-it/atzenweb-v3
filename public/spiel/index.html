@@ -108,7 +108,6 @@
   <div class="side left">
     <button id="bUp" class="big">▲</button>
     <button id="bDown" class="big">▼</button>
-    <div class="row"><button id="bLeft" class="small">◀</button><button id="bRight" class="small">▶</button></div>
     <button id="bFull" class="small fs">⛶ Vollbild</button>
   </div>
   <div id="stage"><canvas id="c" width="960" height="640"></canvas></div>
@@ -784,12 +783,6 @@ addEventListener('pagehide', () => Music.stop());
 for (const [id, fn] of [['bUp', up], ['bDown', down], ['bPour', pour], ['bPause', togglePause], ['bMusic', toggleMusic], ['bSfx', toggleSfx], ['bFull', () => goFullscreen(true)],
      ['bRunde', () => useSpecial('runde')], ['bZeit', () => useSpecial('zeit')], ['bMagnet', () => useSpecial('magnet')]])
   document.getElementById(id).addEventListener('pointerdown', e => { e.preventDefault(); if (!e.isTrusted) { if (game) game.untrusted++; return; } audio(); fn(); });
-for (const [id, k] of [['bLeft', 'left'], ['bRight', 'right']]) {
-  const b = document.getElementById(id);
-  const on = k === 'left' ? 'L1' : 'R1', off = k === 'left' ? 'L0' : 'R0';
-  b.addEventListener('pointerdown', e => { e.preventDefault(); if (!e.isTrusted) { if (game) game.untrusted++; return; } if (state === 'play' && !game.keys[k]) act(on); });
-  for (const ev of ['pointerup', 'pointerleave', 'pointercancel']) b.addEventListener(ev, () => { if (game && game.keys[k]) act(off); });
-}
 
 // ---- Gäste: Tracht und Berlin, jede Figur nur einmal gleichzeitig ----
 const TYPES = [
