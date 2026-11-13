@@ -88,7 +88,7 @@ export function SpielLeiste({ lang, hidden }: { lang: Language; hidden: boolean 
           <div className="flex items-center gap-2 bg-accent border-2 border-ink shadow-lg pl-3 pr-1 py-1.5">
             <a href={SPIEL_URL} className="flex-1 min-w-0 flex items-center gap-2 text-ink no-underline">
               <span className="relative flex-1 min-w-0 leading-tight">
-                <span className="block text-[11px] font-bold tracking-wide">{en ? 'BEER TAP GAME' : 'BIER-ZAPF SPIEL'}</span>
+                <span className="block text-[17px] font-bold tracking-wide [-webkit-text-stroke:0.6px_currentColor]">{en ? 'BEER TAP GAME' : 'BIER-ZAPF SPIEL'}</span>
                 <span className="block text-[13px] font-bold truncate">{en ? 'Win tasty merch' : 'Gewinne lecker Merch'}</span>
                 {/* Bierkrug saust unter der Schrift von links nach rechts durch, immer wieder */}
                 <span aria-hidden="true" className="block relative h-5 overflow-hidden">
