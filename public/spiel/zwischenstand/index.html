@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Kärwa-Spiel – Zwischenstand</title>
+<link rel="stylesheet" href="/spiel/schrift.css">
+<style>
+  :root { --beige:#E2CDAA; --gruen:#058054; --gold:#C1953A; --dunkel:#04583A; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; background:var(--beige); color:var(--dunkel);
+         font:16px/1.4 "Courier New", Courier, monospace; display:flex; flex-direction:column; align-items:center; padding:16px; gap:14px; }
+  h1 { font:700 28px "UnifrakturCook", Georgia, serif; color:var(--gruen); margin:4px 0 0; }
+  p { margin:0; text-align:center; max-width:420px; }
+  .vorschau { width:min(360px, 100%); aspect-ratio:9/16; border:3px solid var(--gruen); box-shadow:6px 6px 0 var(--gold); background:var(--beige); }
+  canvas { width:100%; height:100%; display:block; }
+  .knoepfe { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+  button { font:700 17px "Courier New", monospace; padding:12px 18px; border:3px solid var(--gruen); background:var(--gold); color:var(--dunkel); cursor:pointer; box-shadow:3px 3px 0 var(--gruen); }
+  button.haupt { background:var(--gruen); color:var(--beige); border-color:var(--dunkel); box-shadow:3px 3px 0 var(--gold); }
+  button:active { transform:translate(2px,2px); box-shadow:1px 1px 0 var(--gruen); }
+  #status { font-size:14px; min-height:20px; }
+</style>
+</head>
+<body>
+  <h1>Zwischenstand fürs Story-Posting</h1>
+  <p>Zeigt immer den aktuellen Stand der Bestenliste. Bild speichern und als Instagram-Story posten.</p>
+  <div class="vorschau"><canvas id="bild" width="1080" height="1920"></canvas></div>
+  <div class="knoepfe">
+    <button class="haupt" id="speichern">Bild speichern</button>
+    <button id="neu">Aktualisieren</button>
+  </div>
+  <div id="status"></div>
+
+<script>
+const W = 1080, H = 1920;
+const BEIGE = '#E2CDAA', BEIGE_HELL = '#EEDDBF', GRUEN = '#058054', DUNKEL = '#04583A', GOLD = '#C1953A', GOLD_HELL = '#E3B85A';
+const FRAKTUR = '"UnifrakturCook", Georgia, serif', MONO = '"Courier New", Courier, monospace';
+const ZEIGEN = 5;   // so viele Plätze kommen auf die Story
+const cv = document.getElementById('bild'), ctx = cv.getContext('2d');
+const statusEl = document.getElementById('status');
+const logo = new Image(); logo.src = '/atzengold-logo.webp';
+let daten = null;
+
+function rundRechteck(x, y, w, h, r) { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); }
+function text(t, x, y, groesse, farbe, { font = MONO, gewicht = 700, ausrichtung = 'center', kontur = 0, konturFarbe = DUNKEL, maxBreite } = {}) {
+  ctx.font = `${gewicht} ${groesse}px ${font}`; ctx.textAlign = ausrichtung; ctx.textBaseline = 'middle';
+  if (maxBreite) while (ctx.measureText(t).width > maxBreite && t.length > 3) t = t.slice(0, -2).trimEnd() + '…';
+  if (kontur) { ctx.lineJoin = 'round'; ctx.lineWidth = kontur; ctx.strokeStyle = konturFarbe; ctx.strokeText(t, x, y); }
+  ctx.fillStyle = farbe; ctx.fillText(t, x, y);
+}
+function punkte(n) { return n.toLocaleString('de-DE'); }
+
+function zeichnen() {
+  // Hintergrund mit Strahlen wie im Logo
+  ctx.fillStyle = BEIGE; ctx.fillRect(0, 0, W, H);
+  ctx.save(); ctx.translate(W / 2, 470); ctx.fillStyle = 'rgba(5,128,84,.07)';
+  for (let k = 0; k < 24; k++) { ctx.rotate(Math.PI / 12); ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(-70, -1400); ctx.lineTo(70, -1400); ctx.fill(); }
+  ctx.restore();
+  // Rahmen
+  ctx.strokeStyle = GRUEN; ctx.lineWidth = 10; rundRechteck(34, 34, W - 68, H - 68, 36); ctx.stroke();
+  ctx.strokeStyle = GOLD; ctx.lineWidth = 4; rundRechteck(52, 52, W - 104, H - 104, 26); ctx.stroke();
+
+  // Kopf (unter dem Bereich, den Instagram oben überdeckt)
+  if (logo.complete && logo.naturalWidth) ctx.drawImage(logo, W / 2 - 170, 210, 340, 340);
+  text('Das Kärwa-Spiel', W / 2, 610, 64, GRUEN, { font: FRAKTUR, gewicht: 400, kontur: 0 });
+  text('Zwischenstand', W / 2, 715, 120, GOLD_HELL, { font: FRAKTUR, gewicht: 400, kontur: 14 });
+  const jetzt = new Date();
+  text('Stand: ' + jetzt.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ', '
+       + jetzt.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }) + ' Uhr', W / 2, 805, 32, DUNKEL);
+
+  // Bestenliste
+  const eintraege = (daten && daten.entries || []).slice(0, ZEIGEN);
+  const preise = (daten && daten.prizes) || [];
+  const top = 860, zeile = 132;
+  for (let i = 0; i < ZEIGEN; i++) {
+    const e = eintraege[i], y = top + i * zeile, x = 100, b = W - 200, h = 112;
+    const podest = i < 3;
+    ctx.fillStyle = e ? (i === 0 ? GOLD_HELL : BEIGE_HELL) : 'rgba(238,221,191,.5)';
+    ctx.strokeStyle = GRUEN; ctx.lineWidth = 5; rundRechteck(x, y, b, h, 20); ctx.fill(); ctx.stroke();
+    // Platz-Kreis
+    ctx.fillStyle = podest ? GRUEN : GOLD; ctx.beginPath(); ctx.arc(x + 66, y + h / 2, 40, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = DUNKEL; ctx.lineWidth = 4; ctx.stroke();
+    text(String(i + 1), x + 66, y + h / 2 + 3, 46, podest ? BEIGE_HELL : DUNKEL);
+    if (e) {
+      const mitPreis = podest && preise[i];
+      text(e.name, x + 130, y + (mitPreis ? 40 : h / 2), 42, DUNKEL, { ausrichtung: 'left', maxBreite: b - 430 });
+      if (mitPreis) text('Preis: ' + preise[i], x + 130, y + 82, 26, GRUEN, { ausrichtung: 'left', gewicht: 700, maxBreite: b - 430 });
+      text(punkte(e.score), x + b - 36, y + 44, 46, GRUEN, { ausrichtung: 'right' });
+      text('Punkte', x + b - 36, y + 84, 24, DUNKEL, { ausrichtung: 'right' });
+    } else {
+      text('Platz frei – hol ihn dir!', x + 130, y + h / 2, 36, GRUEN, { ausrichtung: 'left' });
+    }
+  }
+
+  // Countdown und Aufruf (über dem Bereich, den Instagram unten überdeckt)
+  const ende = daten && daten.end;
+  let zeile1 = 'Zapf mit und hol dir den Platz!';
+  if (ende) {
+    const tage = Math.ceil((ende - Date.now()) / 864e5);
+    zeile1 = tage > 1 ? `Noch ${tage} Tage – zapf mit!` : tage === 1 ? 'Nur noch 1 Tag – zapf mit!' : 'Das Gewinnspiel ist vorbei!';
+  }
+  text(zeile1, W / 2, 1565, 50, GRUEN, { font: FRAKTUR, gewicht: 400 });
+  ctx.fillStyle = GRUEN; rundRechteck(170, 1612, W - 340, 104, 22); ctx.fill();
+  ctx.strokeStyle = GOLD; ctx.lineWidth = 6; ctx.stroke();
+  text('atzengold.net/spiel', W / 2, 1666, 50, BEIGE_HELL);
+}
+
+async function laden() {
+  statusEl.textContent = 'Lade Bestenliste …';
+  try {
+    const r = await fetch('/spiel/api/leaderboard', { cache: 'no-store' });
+    if (!r.ok) throw new Error('Status ' + r.status);
+    daten = await r.json();
+    const n = (daten.entries || []).length;
+    statusEl.textContent = n ? `${n} ${n === 1 ? 'Eintrag' : 'Einträge'} auf der Bestenliste.` : 'Noch niemand auf der Bestenliste.';
+  } catch (e) {
+    statusEl.textContent = 'Bestenliste konnte nicht geladen werden (' + e.message + ').';
+  }
+  try { await document.fonts.load('400 64px "UnifrakturCook"'); } catch (e) { /* egal */ }
+  if (!logo.complete) await new Promise(r => { logo.onload = logo.onerror = r; });
+  zeichnen();
+}
+
+document.getElementById('neu').addEventListener('click', laden);
+document.getElementById('speichern').addEventListener('click', () => {
+  cv.toBlob(async blob => {
+    const datum = new Date().toISOString().slice(0, 10);
+    const datei = new File([blob], `atzengold-zwischenstand-${datum}.png`, { type: 'image/png' });
+    // Am Handy direkt teilen (z. B. in Instagram oder Fotos), sonst herunterladen
+    if (navigator.canShare && navigator.canShare({ files: [datei] }) && matchMedia('(pointer:coarse)').matches) {
+      try { await navigator.share({ files: [datei] }); return; } catch (e) { if (e.name === 'AbortError') return; }
+    }
+    const a = document.createElement('a'); a.href = URL.createObjectURL(datei); a.download = datei.name; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  }, 'image/png');
+});
+laden();
+</script>
+</body>
+</html>
