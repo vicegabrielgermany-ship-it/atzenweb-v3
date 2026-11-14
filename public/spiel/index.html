@@ -517,7 +517,7 @@ settings.mode = 1;   // nur noch ein Modus: das Spiel wird von selbst immer schn
 settings.specials = { runde: true, zeit: true, magnet: true };   // Specials sind immer dabei (nur Info im Menü)
 if (settings.musicChoice === undefined) settings.music = true;   // Musik ist an, bis man sie selbst ausschaltet
 let musicTouched = false;
-if (settings.buttonsOn === undefined) settings.buttonsOn = true;   // Tasten links/rechts am Handy: standardmäßig an (im Menü abschaltbar)
+settings.buttonsOn = true;   // Tasten am Handy immer an (Schalter im Menü entfernt)
 function saveSettings() { try { localStorage.setItem('atzengold-settings', JSON.stringify(settings)); } catch (e) {} }
 const MODE = () => MODES[settings.mode];
 function loadHi() { try { return +localStorage.getItem('atzengold-hi-' + MODE().id) || 0; } catch (e) { return 0; } }
@@ -675,7 +675,6 @@ const Music = (() => {
   };
 })();
 function applyButtons() { document.documentElement.classList.toggle('nobtn', !settings.buttonsOn); if (typeof fit === 'function') fit(); }
-function toggleButtons() { settings.buttonsOn = !settings.buttonsOn; saveSettings(); applyButtons(); beep(600, .04); }
 function toggleMusic() {
   settings.music = !settings.music; musicTouched = true;
   document.getElementById('bMusic').classList.remove('blink');
@@ -1402,7 +1401,7 @@ function uiButton(x, y, w, h, text, action, { sub, big, toggle, on, blink } = {}
 }
 
 function drawMainMenu() {
-  overlay(150, 112, 660, isTouch() ? 460 : 435);
+  overlay(150, 112, 660, 435);
   logoTitle(W / 2, 178, 72);
   logoText('Das Bier-Zapf-Spiel', W / 2, 237, 30);   // gleiche Größe wie „Los geht's“   // Untertitel im Stil des Atzengold-Schriftzugs
   label('Specials – im Spiel mit Taste 1, 2, 3 oder per Klick einsetzen', W / 2, 292);
@@ -1417,8 +1416,7 @@ function drawMainMenu() {
   const blink = !musicTouched && !settings.music && Math.sin(G.t * 6) > 0;   // blinkt gelb, bis man ihn einmal antippt
   uiButton(625, 420, 165, 46, settings.music ? '♪ Musik an' : '♪ Musik aus', toggleMusic, { toggle: true, on: settings.music, blink });
   uiButton(170, 420, 165, 46, settings.sfx !== false ? '🔊 Effekte an' : '🔇 Effekte aus', toggleSfx, { toggle: true, on: settings.sfx !== false });
-  if (isTouch()) uiButton(330, 487, 300, 30, settings.buttonsOn ? 'Tasten-Steuerung: an' : 'Tasten-Steuerung: aus (nur Tippen)', toggleButtons, { toggle: true, on: settings.buttonsOn });
-  label('↑/↓ Bahn · Leertaste zapfen · P Pause · T Musik · Bestwert: ' + hi, W / 2, isTouch() ? 548 : 520, 13);
+  label('↑/↓ Bahn · Leertaste zapfen · P Pause · T Musik · Bestwert: ' + hi, W / 2, 520, 13);
   if (Contest.active) uiButton(164, 124, 146, 32, '🏆 Bestenliste', openBoard);
   if (Contest.active) drawPrizeBadge(800, 178);   // Preise nur zeigen, wenn das Gewinnspiel wirklich läuft
   const hint = !musicTouched && !settings.music ? '♪ Mit Wiesn-Musik? Musik-Knopf antippen!' : '';
