@@ -22,8 +22,9 @@ const navLinks = [
   { label: 'BIER-ZAPF SPIEL', href: SPIEL_URL },
 ];
 
-function SidebarContent({ lang, onLangChange, onNavClick, onLogoClick }: {
+function SidebarContent({ lang, onLangChange, onNavClick, onLogoClick, desktop = false }: {
   lang: Language;
+  desktop?: boolean;
   onLangChange: () => void;
   onNavClick?: () => void;
   onLogoClick?: () => void;
@@ -87,7 +88,7 @@ function SidebarContent({ lang, onLangChange, onNavClick, onLogoClick }: {
       </a>
 
       <div className="relative flex-1 flex flex-col items-center justify-end pb-4">
-        <SpielStoerer lang={lang} onClick={onNavClick} />
+        <SpielStoerer lang={lang} onClick={onNavClick} schwebend={desktop} />
         <Suspense fallback={
           <div className="w-full aspect-[3/4] bg-ink/5 rounded animate-pulse" />
         }>
@@ -124,7 +125,7 @@ export default function Sidebar({ lang, onLangChange, isOpen, onClose, onLogoCli
         className="sticky top-0 h-screen w-[210px] bg-canvas z-40 flex-col px-6 pt-8 pb-0 overflow-y-auto sidebar-scrollbar-hidden hidden lg:flex shrink-0"
         style={{ scrollbarWidth: 'none', '-ms-overflowStyle': 'none' }}
       >
-        <SidebarContent lang={lang} onLangChange={onLangChange} onLogoClick={onLogoClick} />
+        <SidebarContent lang={lang} onLangChange={onLangChange} onLogoClick={onLogoClick} desktop />
       </aside>
 
       {/* Mobile drawer — slide-in overlay at < lg */}
