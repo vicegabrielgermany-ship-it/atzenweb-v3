@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Atzengold">
-<title>Atzengold – Das Kärwa-Spiel</title>
+<title>Atzengold – Das Bier-Zapf-Spiel</title>
 <link rel="stylesheet" href="/spiel/schrift.css">
 <style>
   :root { --gold:#E8B220; --black:#141210; --beige:#EBD3A8; --stone:#4a4745; }
@@ -1404,7 +1404,7 @@ function uiButton(x, y, w, h, text, action, { sub, big, toggle, on, blink } = {}
 function drawMainMenu() {
   overlay(150, 112, 660, isTouch() ? 460 : 435);
   logoTitle(W / 2, 178, 72);
-  logoText('Das Kärwa-Spiel', W / 2, 237, 30);   // gleiche Größe wie „Los geht's“   // Untertitel im Stil des Atzengold-Schriftzugs
+  logoText('Das Bier-Zapf-Spiel', W / 2, 237, 30);   // gleiche Größe wie „Los geht's“   // Untertitel im Stil des Atzengold-Schriftzugs
   label('Specials – im Spiel mit Taste 1, 2, 3 oder per Klick einsetzen', W / 2, 292);
   SPECIALS.forEach((s, k) => {   // nur Info, keine Knöpfe
     const cx = 285 + k * 205;
