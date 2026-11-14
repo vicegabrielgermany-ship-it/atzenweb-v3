@@ -1513,7 +1513,7 @@ function contestLine() {
   if (r.status === 'error') return 'Prüfung nicht möglich: ' + r.message;
   if (!r.ok) return 'Nicht gewertet: ' + (r.message || 'Prüfung fehlgeschlagen');
   if (r.claimed) return '✔ Platz ' + r.rank + ' ist gesichert – viel Glück!';
-  if (r.qualifies) return 'Geprüft! Das wäre Platz ' + r.rank + ' – jetzt Platz sichern.';
+  if (r.qualifies) return '★ Das wäre Platz ' + r.rank + '! Jetzt sichern – sonst verfällt die Runde.';
   return 'Geprüft: ' + r.score + ' Punkte – für die Top ' + r.topN + ' hat es diesmal nicht gereicht.';
 }
 function drawGameOver() {
@@ -1524,10 +1524,10 @@ function drawGameOver() {
   label('Bis Runde ' + G.round + ' gekommen', W / 2, 258, 16);
   label(G.newHi ? 'Neuer Bestwert!' : 'Bestwert: ' + hi, W / 2, 282, 16);
   const line = contestLine();
-  if (line) label(line, W / 2, 310, 14, line.startsWith('✔') ? GREEN : '#3a2a1a');
+  if (line) label(line, W / 2, 310, line.startsWith('★') ? 15 : 14, line.startsWith('✔') || line.startsWith('★') ? GREEN : '#3a2a1a');
   let y = 332;
   const canClaim = !replayData && Contest.result && Contest.result.qualifies && !Contest.result.claimed;
-  if (canClaim) { uiButton(350, y, 260, 50, '🏆 Platz sichern', () => Claim.open()); y += 60; }
+  if (canClaim) { uiButton(350, y, 260, 50, '🏆 Platz sichern', () => Claim.open(), { blink: Math.sin(performance.now() / 180) > 0 }); y += 60; }   // blinkt, damit gute Runden nicht verfallen
   uiButton(350, y, 260, 50, 'Nochmal', startGame); y += 60;
   if (Contest.active) { uiButton(350, y, 125, 46, 'Bestenliste', openBoard); uiButton(485, y, 125, 46, 'Hauptmenü', toMenu); }
   else uiButton(350, y, 260, 50, 'Hauptmenü', toMenu);
