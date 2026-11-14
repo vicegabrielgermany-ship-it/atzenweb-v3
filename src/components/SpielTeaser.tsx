@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import X from 'lucide-react/dist/esm/icons/x';
 import { Language } from '../types';
 
-// Teaser fürs Kärwa-Spiel (www.atzengold.net/spiel/).
+// Teaser fürs Bier-Zapf-Spiel (www.atzengold.net/spiel/).
 // Nach Ende des Gewinnspiels blenden sich Störer und Leiste von selbst aus.
 export const SPIEL_URL = '/spiel/';
 const GEWINNSPIEL_ENDE = Date.parse('2026-12-31T23:59:59+01:00');
@@ -18,21 +19,10 @@ const STERN_ZACKEN = (() => {
   return pts.join(' ');
 })();
 
-/** Goldener Störer, der an der mitfahrenden Flasche hängt (Seitenleiste). */
-export function SpielStoerer({ lang, onClick }: { lang: Language; onClick?: () => void }) {
-  if (!gewinnspielLaeuft()) return null;
-  const en = lang === 'en';
+/** Inhalt des Störers: drehender Stern, stehende Schrift. */
+function StoererInhalt({ en, gross }: { en: boolean; gross: boolean }) {
   return (
-    <motion.a
-      href={SPIEL_URL}
-      onClick={onClick}
-      aria-label={en ? 'Beer tap game – win tasty merch' : 'Bier-Zapf Spiel – gewinne lecker Merch'}
-      className="absolute z-10 block w-[118px] h-[118px] -top-2 right-0 drop-shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-ink rounded-full"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ opacity: { duration: 0.4 } }}
-      whileHover={{ scale: 1.1 }}
-    >
+    <>
       {/* Nur der Stern dreht sich (gegen den Uhrzeigersinn), die Schrift bleibt stehen */}
       <motion.svg
         viewBox="0 0 100 100"
@@ -44,10 +34,89 @@ export function SpielStoerer({ lang, onClick }: { lang: Language; onClick?: () =
         <polygon points={STERN_ZACKEN} fill="var(--color-accent)" stroke="var(--color-ink)" strokeWidth="1.6" />
       </motion.svg>
       <span className="relative flex flex-col items-center justify-center w-full h-full text-ink text-center leading-tight px-2">
-        <span className="text-[13px] font-bold leading-[1.05]">{en ? <>BEER TAP<br />GAME</> : <>BIER-ZAPF<br />SPIEL</>}</span>
-        <span className="text-[30px] font-bold leading-[0.9] my-0.5" aria-hidden="true">→</span>
-        <span className="text-[10px] font-bold leading-[1.15]">{en ? <>Win tasty<br />merch</> : <>Gewinne<br />lecker Merch</>}</span>
+        <span className={(gross ? 'text-[19px]' : 'text-[13px]') + ' font-bold leading-[1.05]'}>{en ? <>BEER TAP<br />GAME</> : <>BIER-ZAPF<br />SPIEL</>}</span>
+        <span className={(gross ? 'text-[42px]' : 'text-[30px]') + ' font-bold leading-[0.9] my-0.5'} aria-hidden="true">→</span>
+        <span className={(gross ? 'text-[14px]' : 'text-[10px]') + ' font-bold leading-[1.15]'}>{en ? <>Win tasty<br />merch</> : <>Gewinne<br />lecker Merch</>}</span>
       </span>
+    </>
+  );
+}
+
+const GROSS = 170;   // Durchmesser des Störers am Desktop (px)
+
+/**
+ * Goldener Störer an der mitfahrenden Flasche (Seitenleiste).
+ * Desktop (schwebend): größer, pulsiert und ragt zu einem Drittel über den Inhalt in der Mitte.
+ * Da die Seitenleiste scrollbar ist und alles abschneidet, was übersteht, liegt der Störer
+ * dort fest auf der Seite und richtet sich an seinem Platz in der Seitenleiste aus.
+ */
+export function SpielStoerer({ lang, onClick, schwebend = false }: { lang: Language; onClick?: () => void; schwebend?: boolean }) {
+  const anker = useRef<HTMLSpanElement>(null);
+  const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
+
+  useEffect(() => {
+    if (!schwebend) return;
+    const el = anker.current;
+    if (!el) return;
+    const leiste = el.closest('aside');
+    let raf = 0;
+    const messen = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const a = el.getBoundingClientRect();
+        if (!leiste || a.width === 0 && a.height === 0 && !el.offsetParent) { setPos(null); return; }
+        const rand = leiste.getBoundingClientRect().right;
+        setPos({ left: rand - (GROSS * 2) / 3, top: Math.max(8, a.top + 18) });   // etwas Abstand zum „Bier finden“-Knopf
+      });
+    };
+    messen();
+    const ro = new ResizeObserver(messen);
+    ro.observe(document.documentElement);
+    if (leiste) { ro.observe(leiste); leiste.addEventListener('scroll', messen, { passive: true }); }
+    window.addEventListener('resize', messen);
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); leiste?.removeEventListener('scroll', messen); window.removeEventListener('resize', messen); };
+  }, [schwebend]);
+
+  if (!gewinnspielLaeuft()) return null;
+  const en = lang === 'en';
+  const label = en ? 'Beer tap game – win tasty merch' : 'Bier-Zapf Spiel – gewinne lecker Merch';
+
+  if (schwebend) {
+    return (
+      <>
+        <span ref={anker} aria-hidden="true" className="absolute -top-2 right-0 w-0 h-0" />
+        {pos && createPortal(
+          <motion.a
+            href={SPIEL_URL}
+            onClick={onClick}
+            aria-label={label}
+            className="fixed z-[45] hidden lg:block rounded-full drop-shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-ink"
+            style={{ left: pos.left, top: pos.top, width: GROSS, height: GROSS }}
+            initial={{ opacity: 0, scale: 0.6 }}
+            animate={{ opacity: 1, scale: [1, 1.09, 1] }}
+            transition={{ opacity: { duration: 0.4 }, scale: { duration: 1.4, ease: 'easeInOut', repeat: Infinity } }}
+            whileHover={{ scale: 1.14 }}
+          >
+            <StoererInhalt en={en} gross />
+          </motion.a>,
+          document.body,
+        )}
+      </>
+    );
+  }
+
+  return (
+    <motion.a
+      href={SPIEL_URL}
+      onClick={onClick}
+      aria-label={label}
+      className="absolute z-10 block w-[118px] h-[118px] -top-2 right-0 drop-shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-ink rounded-full"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ opacity: { duration: 0.4 } }}
+      whileHover={{ scale: 1.1 }}
+    >
+      <StoererInhalt en={en} gross={false} />
     </motion.a>
   );
 }
